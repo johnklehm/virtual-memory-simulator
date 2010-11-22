@@ -933,7 +933,9 @@ public class ControlPanel extends Frame {
 		l63.setFont(new Font("Courier", 0, 10));
 		add(l63);
 
-		kernel.init(commands, config);
+		if (commands != null) {
+			kernel.init(commands, config);
+		}
 
 		setVisible(true);
 	}

@@ -2,14 +2,13 @@
 
 import java.io.*;
 
-public class MemoryManagement {
+public class VirtualMemorySimulatorCLI {
 	public static void main(String[] args) {
-		ControlPanel controlPanel;
 		Kernel kernel;
 
 		if (args.length < 1 || args.length > 2) {
 			System.out
-					.println("Usage: 'java MemoryManagement <COMMAND FILE> <PROPERTIES FILE>'");
+			.println("Usage: 'java MemoryManagement <COMMAND FILE> <PROPERTIES FILE>'");
 			System.exit(-1);
 		}
 
@@ -42,11 +41,10 @@ public class MemoryManagement {
 		}
 
 		kernel = new Kernel();
-		controlPanel = new ControlPanel("Memory Management");
 		if (args.length == 1) {
-			controlPanel.init(kernel, args[0], null);
+			kernel.init(args[0], null);
 		} else {
-			controlPanel.init(kernel, args[0], args[1]);
+			kernel.init(args[0], args[1]);
 		}
 	}
 }
