@@ -1,10 +1,7 @@
 import java.awt.*;
 
 public class ControlPanel extends Frame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6280534328667165120L;
 	Kernel kernel;
 	Button runButton = new Button("run");
 	Button stepButton = new Button("step");
