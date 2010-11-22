@@ -8,7 +8,7 @@ public class Kernel extends Thread {
 	private static int virtPageNum = 63;
 
 	private String output = null;
-	private static final String lineSeparator = System
+	private static final String ls = System
 			.getProperty("line.separator");
 	private String command_file;
 	private String config_file;
@@ -50,7 +50,8 @@ public class Kernel extends Thread {
 			f = new File(config);
 
 			try {
-				DataInputStream in = new DataInputStream(new FileInputStream(f));
+				BufferedReader in = new BufferedReader(new InputStreamReader(
+						new FileInputStream(f)));
 				while ((line = in.readLine()) != null) {
 					if (line.startsWith("numphyspages")) {
 						StringTokenizer st = new StringTokenizer(line);
@@ -70,7 +71,8 @@ public class Kernel extends Thread {
 			}
 
 			try {
-				DataInputStream in = new DataInputStream(new FileInputStream(f));
+				BufferedReader in = new BufferedReader(new InputStreamReader(
+						new FileInputStream(f)));
 				while ((line = in.readLine()) != null) {
 					if (line.startsWith("numpages")) {
 						StringTokenizer st = new StringTokenizer(line);
@@ -95,7 +97,8 @@ public class Kernel extends Thread {
 				memVector.addElement(new Page(i, -1, R, M, 0, 0, high, low));
 			}
 			try {
-				DataInputStream in = new DataInputStream(new FileInputStream(f));
+				BufferedReader in = new BufferedReader(new InputStreamReader(
+						new FileInputStream(f)));
 				while ((line = in.readLine()) != null)
 
 				{
@@ -112,9 +115,9 @@ public class Kernel extends Thread {
 							}
 							if ((0 > id || id > virtPageNum)
 									|| (-1 > currentPhysicalPage || currentPhysicalPage > (physicalPageCount))) {
-								System.out.printf("%d %d %d %d \n", id,
+								System.out.printf("%d %d %d %d %s", id,
 										currentPhysicalPage, virtPageNum,
-										physicalPageCount);
+										physicalPageCount, ls);
 								System.out
 										.println("MemoryManagement: Invalid page value in "
 												+ config
@@ -230,12 +233,13 @@ public class Kernel extends Thread {
 		}
 		f = new File(commands);
 		try {
-			DataInputStream in = new DataInputStream(new FileInputStream(f));
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					new FileInputStream(f)));
 			int lcount = 0;
 			while ((line = in.readLine()) != null) {
 				lcount++;
 				if ((lcount % 100) == 0) {
-					System.out.printf("Line %d\n", lcount);
+					System.out.printf("Line %d%s", lcount, ls);
 				}
 
 				if (line.startsWith("READ") || line.startsWith("WRITE")) {
@@ -330,8 +334,8 @@ public class Kernel extends Thread {
 			if (instruct.addr < 0 || instruct.addr > high) {
 				System.out
 						.printf(
-								"MemoryManagement: Instruction (%s %x) out of bounds. Range: %x %x\n",
-								instruct.inst, instruct.addr, low, high);
+								"MemoryManagement: Instruction (%s %x) out of bounds. Range: %x %x%s",
+								instruct.inst, instruct.addr, low, high, ls);
 				System.exit(-1);
 			}
 		}
@@ -347,8 +351,6 @@ public class Kernel extends Thread {
 	}
 
 	private void printPageFaultCount() {
-		File trace = new File(output);
-
 		try {
 			PrintStream out = new PrintStream(
 					new FileOutputStream(output, true));
@@ -363,24 +365,9 @@ public class Kernel extends Thread {
 	}
 
 	private void printLogFile(String message) {
-		String line;
-		String temp = "";
-
-		File trace = new File(output);
-		/*
-		 * Don't do this idiotic thing. Simply append to the file (though this
-		 * is still kludgy...) if (trace.exists()) { try { DataInputStream in =
-		 * new DataInputStream( new FileInputStream( output ) ); while ((line =
-		 * in.readLine()) != null) { temp = temp + line + lineSeparator; }
-		 * in.close(); } catch ( IOException e ) {
-		 * 
-		 * } }
-		 */
-
 		try {
 			PrintStream out = new PrintStream(
 					new FileOutputStream(output, true));
-			// out.print( temp );
 			out.println(message);
 			out.close();
 		} catch (IOException e) {

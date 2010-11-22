@@ -166,779 +166,779 @@ public class ControlPanel extends Frame {
 		setLayout(null);
 		setBackground(Color.white);
 		setForeground(Color.black);
-		resize(635, 545);
+		setSize(635, 545);
 		setFont(new Font("Courier", 0, 12));
 
 		runButton.setForeground(Color.blue);
 		runButton.setBackground(Color.lightGray);
-		runButton.reshape(0, 25, 70, 15);
+		runButton.setBounds(0, 25, 70, 15);
 		add(runButton);
 
 		stepButton.setForeground(Color.blue);
 		stepButton.setBackground(Color.lightGray);
-		stepButton.reshape(70, 25, 70, 15);
+		stepButton.setBounds(70, 25, 70, 15);
 		add(stepButton);
 
 		resetButton.setForeground(Color.blue);
 		resetButton.setBackground(Color.lightGray);
-		resetButton.reshape(140, 25, 70, 15);
+		resetButton.setBounds(140, 25, 70, 15);
 		add(resetButton);
 
 		exitButton.setForeground(Color.blue);
 		exitButton.setBackground(Color.lightGray);
-		exitButton.reshape(210, 25, 70, 15);
+		exitButton.setBounds(210, 25, 70, 15);
 		add(exitButton);
 
-		b0.reshape(0, (0 + 2) * 15 + 25, 70, 15);
+		b0.setBounds(0, (0 + 2) * 15 + 25, 70, 15);
 		b0.setForeground(Color.magenta);
 		b0.setBackground(Color.lightGray);
 		add(b0);
 
-		b1.reshape(0, (1 + 2) * 15 + 25, 70, 15);
+		b1.setBounds(0, (1 + 2) * 15 + 25, 70, 15);
 		b1.setForeground(Color.magenta);
 		b1.setBackground(Color.lightGray);
 		add(b1);
 
-		b2.reshape(0, (2 + 2) * 15 + 25, 70, 15);
+		b2.setBounds(0, (2 + 2) * 15 + 25, 70, 15);
 		b2.setForeground(Color.magenta);
 		b2.setBackground(Color.lightGray);
 		add(b2);
 
-		b3.reshape(0, (3 + 2) * 15 + 25, 70, 15);
+		b3.setBounds(0, (3 + 2) * 15 + 25, 70, 15);
 		b3.setForeground(Color.magenta);
 		b3.setBackground(Color.lightGray);
 		add(b3);
 
-		b4.reshape(0, (4 + 2) * 15 + 25, 70, 15);
+		b4.setBounds(0, (4 + 2) * 15 + 25, 70, 15);
 		b4.setForeground(Color.magenta);
 		b4.setBackground(Color.lightGray);
 		add(b4);
 
-		b5.reshape(0, (5 + 2) * 15 + 25, 70, 15);
+		b5.setBounds(0, (5 + 2) * 15 + 25, 70, 15);
 		b5.setForeground(Color.magenta);
 		b5.setBackground(Color.lightGray);
 		add(b5);
 
-		b6.reshape(0, (6 + 2) * 15 + 25, 70, 15);
+		b6.setBounds(0, (6 + 2) * 15 + 25, 70, 15);
 		b6.setForeground(Color.magenta);
 		b6.setBackground(Color.lightGray);
 		add(b6);
 
-		b7.reshape(0, (7 + 2) * 15 + 25, 70, 15);
+		b7.setBounds(0, (7 + 2) * 15 + 25, 70, 15);
 		b7.setForeground(Color.magenta);
 		b7.setBackground(Color.lightGray);
 		add(b7);
 
-		b8.reshape(0, (8 + 2) * 15 + 25, 70, 15);
+		b8.setBounds(0, (8 + 2) * 15 + 25, 70, 15);
 		b8.setForeground(Color.magenta);
 		b8.setBackground(Color.lightGray);
 		add(b8);
 
-		b9.reshape(0, (9 + 2) * 15 + 25, 70, 15);
+		b9.setBounds(0, (9 + 2) * 15 + 25, 70, 15);
 		b9.setForeground(Color.magenta);
 		b9.setBackground(Color.lightGray);
 		add(b9);
 
-		b10.reshape(0, (10 + 2) * 15 + 25, 70, 15);
+		b10.setBounds(0, (10 + 2) * 15 + 25, 70, 15);
 		b10.setForeground(Color.magenta);
 		b10.setBackground(Color.lightGray);
 		add(b10);
 
-		b11.reshape(0, (11 + 2) * 15 + 25, 70, 15);
+		b11.setBounds(0, (11 + 2) * 15 + 25, 70, 15);
 		b11.setForeground(Color.magenta);
 		b11.setBackground(Color.lightGray);
 		add(b11);
 
-		b12.reshape(0, (12 + 2) * 15 + 25, 70, 15);
+		b12.setBounds(0, (12 + 2) * 15 + 25, 70, 15);
 		b12.setForeground(Color.magenta);
 		b12.setBackground(Color.lightGray);
 		add(b12);
 
-		b13.reshape(0, (13 + 2) * 15 + 25, 70, 15);
+		b13.setBounds(0, (13 + 2) * 15 + 25, 70, 15);
 		b13.setForeground(Color.magenta);
 		b13.setBackground(Color.lightGray);
 		add(b13);
 
-		b14.reshape(0, (14 + 2) * 15 + 25, 70, 15);
+		b14.setBounds(0, (14 + 2) * 15 + 25, 70, 15);
 		b14.setForeground(Color.magenta);
 		b14.setBackground(Color.lightGray);
 		add(b14);
 
-		b15.reshape(0, (15 + 2) * 15 + 25, 70, 15);
+		b15.setBounds(0, (15 + 2) * 15 + 25, 70, 15);
 		b15.setForeground(Color.magenta);
 		b15.setBackground(Color.lightGray);
 		add(b15);
 
-		b16.reshape(0, (16 + 2) * 15 + 25, 70, 15);
+		b16.setBounds(0, (16 + 2) * 15 + 25, 70, 15);
 		b16.setForeground(Color.magenta);
 		b16.setBackground(Color.lightGray);
 		add(b16);
 
-		b17.reshape(0, (17 + 2) * 15 + 25, 70, 15);
+		b17.setBounds(0, (17 + 2) * 15 + 25, 70, 15);
 		b17.setForeground(Color.magenta);
 		b17.setBackground(Color.lightGray);
 		add(b17);
 
-		b18.reshape(0, (18 + 2) * 15 + 25, 70, 15);
+		b18.setBounds(0, (18 + 2) * 15 + 25, 70, 15);
 		b18.setForeground(Color.magenta);
 		b18.setBackground(Color.lightGray);
 		add(b18);
 
-		b19.reshape(0, (19 + 2) * 15 + 25, 70, 15);
+		b19.setBounds(0, (19 + 2) * 15 + 25, 70, 15);
 		b19.setForeground(Color.magenta);
 		b19.setBackground(Color.lightGray);
 		add(b19);
 
-		b20.reshape(0, (20 + 2) * 15 + 25, 70, 15);
+		b20.setBounds(0, (20 + 2) * 15 + 25, 70, 15);
 		b20.setForeground(Color.magenta);
 		b20.setBackground(Color.lightGray);
 		add(b20);
 
-		b21.reshape(0, (21 + 2) * 15 + 25, 70, 15);
+		b21.setBounds(0, (21 + 2) * 15 + 25, 70, 15);
 		b21.setForeground(Color.magenta);
 		b21.setBackground(Color.lightGray);
 		add(b21);
 
-		b22.reshape(0, (22 + 2) * 15 + 25, 70, 15);
+		b22.setBounds(0, (22 + 2) * 15 + 25, 70, 15);
 		b22.setForeground(Color.magenta);
 		b22.setBackground(Color.lightGray);
 		add(b22);
 
-		b23.reshape(0, (23 + 2) * 15 + 25, 70, 15);
+		b23.setBounds(0, (23 + 2) * 15 + 25, 70, 15);
 		b23.setForeground(Color.magenta);
 		b23.setBackground(Color.lightGray);
 		add(b23);
 
-		b24.reshape(0, (24 + 2) * 15 + 25, 70, 15);
+		b24.setBounds(0, (24 + 2) * 15 + 25, 70, 15);
 		b24.setForeground(Color.magenta);
 		b24.setBackground(Color.lightGray);
 		add(b24);
 
-		b25.reshape(0, (25 + 2) * 15 + 25, 70, 15);
+		b25.setBounds(0, (25 + 2) * 15 + 25, 70, 15);
 		b25.setForeground(Color.magenta);
 		b25.setBackground(Color.lightGray);
 		add(b25);
 
-		b26.reshape(0, (26 + 2) * 15 + 25, 70, 15);
+		b26.setBounds(0, (26 + 2) * 15 + 25, 70, 15);
 		b26.setForeground(Color.magenta);
 		b26.setBackground(Color.lightGray);
 		add(b26);
 
-		b27.reshape(0, (27 + 2) * 15 + 25, 70, 15);
+		b27.setBounds(0, (27 + 2) * 15 + 25, 70, 15);
 		b27.setForeground(Color.magenta);
 		b27.setBackground(Color.lightGray);
 		add(b27);
 
-		b28.reshape(0, (28 + 2) * 15 + 25, 70, 15);
+		b28.setBounds(0, (28 + 2) * 15 + 25, 70, 15);
 		b28.setForeground(Color.magenta);
 		b28.setBackground(Color.lightGray);
 		add(b28);
 
-		b29.reshape(0, (29 + 2) * 15 + 25, 70, 15);
+		b29.setBounds(0, (29 + 2) * 15 + 25, 70, 15);
 		b29.setForeground(Color.magenta);
 		b29.setBackground(Color.lightGray);
 		add(b29);
 
-		b30.reshape(0, (30 + 2) * 15 + 25, 70, 15);
+		b30.setBounds(0, (30 + 2) * 15 + 25, 70, 15);
 		b30.setForeground(Color.magenta);
 		b30.setBackground(Color.lightGray);
 		add(b30);
 
-		b31.reshape(0, (31 + 2) * 15 + 25, 70, 15);
+		b31.setBounds(0, (31 + 2) * 15 + 25, 70, 15);
 		b31.setForeground(Color.magenta);
 		b31.setBackground(Color.lightGray);
 		add(b31);
 
-		b32.reshape(140, (0 + 2) * 15 + 25, 70, 15);
+		b32.setBounds(140, (0 + 2) * 15 + 25, 70, 15);
 		b32.setForeground(Color.magenta);
 		b32.setBackground(Color.lightGray);
 		add(b32);
 
-		b33.reshape(140, (1 + 2) * 15 + 25, 70, 15);
+		b33.setBounds(140, (1 + 2) * 15 + 25, 70, 15);
 		b33.setForeground(Color.magenta);
 		b33.setBackground(Color.lightGray);
 		add(b33);
 
-		b34.reshape(140, (2 + 2) * 15 + 25, 70, 15);
+		b34.setBounds(140, (2 + 2) * 15 + 25, 70, 15);
 		b34.setForeground(Color.magenta);
 		b34.setBackground(Color.lightGray);
 		add(b34);
 
-		b35.reshape(140, (3 + 2) * 15 + 25, 70, 15);
+		b35.setBounds(140, (3 + 2) * 15 + 25, 70, 15);
 		b35.setForeground(Color.magenta);
 		b35.setBackground(Color.lightGray);
 		add(b35);
 
-		b36.reshape(140, (4 + 2) * 15 + 25, 70, 15);
+		b36.setBounds(140, (4 + 2) * 15 + 25, 70, 15);
 		b36.setForeground(Color.magenta);
 		b36.setBackground(Color.lightGray);
 		add(b36);
 
-		b37.reshape(140, (5 + 2) * 15 + 25, 70, 15);
+		b37.setBounds(140, (5 + 2) * 15 + 25, 70, 15);
 		b37.setForeground(Color.magenta);
 		b37.setBackground(Color.lightGray);
 		add(b37);
 
-		b38.reshape(140, (6 + 2) * 15 + 25, 70, 15);
+		b38.setBounds(140, (6 + 2) * 15 + 25, 70, 15);
 		b38.setForeground(Color.magenta);
 		b38.setBackground(Color.lightGray);
 		add(b38);
 
-		b39.reshape(140, (7 + 2) * 15 + 25, 70, 15);
+		b39.setBounds(140, (7 + 2) * 15 + 25, 70, 15);
 		b39.setForeground(Color.magenta);
 		b39.setBackground(Color.lightGray);
 		add(b39);
 
-		b40.reshape(140, (8 + 2) * 15 + 25, 70, 15);
+		b40.setBounds(140, (8 + 2) * 15 + 25, 70, 15);
 		b40.setForeground(Color.magenta);
 		b40.setBackground(Color.lightGray);
 		add(b40);
 
-		b41.reshape(140, (9 + 2) * 15 + 25, 70, 15);
+		b41.setBounds(140, (9 + 2) * 15 + 25, 70, 15);
 		b41.setForeground(Color.magenta);
 		b41.setBackground(Color.lightGray);
 		add(b41);
 
-		b42.reshape(140, (10 + 2) * 15 + 25, 70, 15);
+		b42.setBounds(140, (10 + 2) * 15 + 25, 70, 15);
 		b42.setForeground(Color.magenta);
 		b42.setBackground(Color.lightGray);
 		add(b42);
 
-		b43.reshape(140, (11 + 2) * 15 + 25, 70, 15);
+		b43.setBounds(140, (11 + 2) * 15 + 25, 70, 15);
 		b43.setForeground(Color.magenta);
 		b43.setBackground(Color.lightGray);
 		add(b43);
 
-		b44.reshape(140, (12 + 2) * 15 + 25, 70, 15);
+		b44.setBounds(140, (12 + 2) * 15 + 25, 70, 15);
 		b44.setForeground(Color.magenta);
 		b44.setBackground(Color.lightGray);
 		add(b44);
 
-		b45.reshape(140, (13 + 2) * 15 + 25, 70, 15);
+		b45.setBounds(140, (13 + 2) * 15 + 25, 70, 15);
 		b45.setForeground(Color.magenta);
 		b45.setBackground(Color.lightGray);
 		add(b45);
 
-		b46.reshape(140, (14 + 2) * 15 + 25, 70, 15);
+		b46.setBounds(140, (14 + 2) * 15 + 25, 70, 15);
 		b46.setForeground(Color.magenta);
 		b46.setBackground(Color.lightGray);
 		add(b46);
 
-		b47.reshape(140, (15 + 2) * 15 + 25, 70, 15);
+		b47.setBounds(140, (15 + 2) * 15 + 25, 70, 15);
 		b47.setForeground(Color.magenta);
 		b47.setBackground(Color.lightGray);
 		add(b47);
 
-		b48.reshape(140, (16 + 2) * 15 + 25, 70, 15);
+		b48.setBounds(140, (16 + 2) * 15 + 25, 70, 15);
 		b48.setForeground(Color.magenta);
 		b48.setBackground(Color.lightGray);
 		add(b48);
 
-		b49.reshape(140, (17 + 2) * 15 + 25, 70, 15);
+		b49.setBounds(140, (17 + 2) * 15 + 25, 70, 15);
 		b49.setForeground(Color.magenta);
 		b49.setBackground(Color.lightGray);
 		add(b49);
 
-		b50.reshape(140, (18 + 2) * 15 + 25, 70, 15);
+		b50.setBounds(140, (18 + 2) * 15 + 25, 70, 15);
 		b50.setForeground(Color.magenta);
 		b50.setBackground(Color.lightGray);
 		add(b50);
 
-		b51.reshape(140, (19 + 2) * 15 + 25, 70, 15);
+		b51.setBounds(140, (19 + 2) * 15 + 25, 70, 15);
 		b51.setForeground(Color.magenta);
 		b51.setBackground(Color.lightGray);
 		add(b51);
 
-		b52.reshape(140, (20 + 2) * 15 + 25, 70, 15);
+		b52.setBounds(140, (20 + 2) * 15 + 25, 70, 15);
 		b52.setForeground(Color.magenta);
 		b52.setBackground(Color.lightGray);
 		add(b52);
 
-		b53.reshape(140, (21 + 2) * 15 + 25, 70, 15);
+		b53.setBounds(140, (21 + 2) * 15 + 25, 70, 15);
 		b53.setForeground(Color.magenta);
 		b53.setBackground(Color.lightGray);
 		add(b53);
 
-		b54.reshape(140, (22 + 2) * 15 + 25, 70, 15);
+		b54.setBounds(140, (22 + 2) * 15 + 25, 70, 15);
 		b54.setForeground(Color.magenta);
 		b54.setBackground(Color.lightGray);
 		add(b54);
 
-		b55.reshape(140, (23 + 2) * 15 + 25, 70, 15);
+		b55.setBounds(140, (23 + 2) * 15 + 25, 70, 15);
 		b55.setForeground(Color.magenta);
 		b55.setBackground(Color.lightGray);
 		add(b55);
 
-		b56.reshape(140, (24 + 2) * 15 + 25, 70, 15);
+		b56.setBounds(140, (24 + 2) * 15 + 25, 70, 15);
 		b56.setForeground(Color.magenta);
 		b56.setBackground(Color.lightGray);
 		add(b56);
 
-		b57.reshape(140, (25 + 2) * 15 + 25, 70, 15);
+		b57.setBounds(140, (25 + 2) * 15 + 25, 70, 15);
 		b57.setForeground(Color.magenta);
 		b57.setBackground(Color.lightGray);
 		add(b57);
 
-		b58.reshape(140, (26 + 2) * 15 + 25, 70, 15);
+		b58.setBounds(140, (26 + 2) * 15 + 25, 70, 15);
 		b58.setForeground(Color.magenta);
 		b58.setBackground(Color.lightGray);
 		add(b58);
 
-		b59.reshape(140, (27 + 2) * 15 + 25, 70, 15);
+		b59.setBounds(140, (27 + 2) * 15 + 25, 70, 15);
 		b59.setForeground(Color.magenta);
 		b59.setBackground(Color.lightGray);
 		add(b59);
 
-		b60.reshape(140, (28 + 2) * 15 + 25, 70, 15);
+		b60.setBounds(140, (28 + 2) * 15 + 25, 70, 15);
 		b60.setForeground(Color.magenta);
 		b60.setBackground(Color.lightGray);
 		add(b60);
 
-		b61.reshape(140, (29 + 2) * 15 + 25, 70, 15);
+		b61.setBounds(140, (29 + 2) * 15 + 25, 70, 15);
 		b61.setForeground(Color.magenta);
 		b61.setBackground(Color.lightGray);
 		add(b61);
 
-		b62.reshape(140, (30 + 2) * 15 + 25, 70, 15);
+		b62.setBounds(140, (30 + 2) * 15 + 25, 70, 15);
 		b62.setForeground(Color.magenta);
 		b62.setBackground(Color.lightGray);
 		add(b62);
 
-		b63.reshape(140, (31 + 2) * 15 + 25, 70, 15);
+		b63.setBounds(140, (31 + 2) * 15 + 25, 70, 15);
 		b63.setForeground(Color.magenta);
 		b63.setBackground(Color.lightGray);
 		add(b63);
 
-		statusValueLabel.reshape(345, 0 + 25, 100, 15);
+		statusValueLabel.setBounds(345, 0 + 25, 100, 15);
 		add(statusValueLabel);
 
-		timeValueLabel.reshape(345, 15 + 25, 100, 15);
+		timeValueLabel.setBounds(345, 15 + 25, 100, 15);
 		add(timeValueLabel);
 
-		instructionValueLabel.reshape(385, 45 + 25, 100, 15);
+		instructionValueLabel.setBounds(385, 45 + 25, 100, 15);
 		add(instructionValueLabel);
 
-		addressValueLabel.reshape(385, 60 + 25, 230, 15);
+		addressValueLabel.setBounds(385, 60 + 25, 230, 15);
 		add(addressValueLabel);
 
-		pageFaultValueLabel.reshape(385, 90 + 25, 100, 15);
+		pageFaultValueLabel.setBounds(385, 90 + 25, 100, 15);
 		add(pageFaultValueLabel);
 
-		virtualPageValueLabel.reshape(395, 120 + 25, 200, 15);
+		virtualPageValueLabel.setBounds(395, 120 + 25, 200, 15);
 		add(virtualPageValueLabel);
 
-		physicalPageValueLabel.reshape(395, 135 + 25, 200, 15);
+		physicalPageValueLabel.setBounds(395, 135 + 25, 200, 15);
 		add(physicalPageValueLabel);
 
-		RValueLabel.reshape(395, 150 + 25, 200, 15);
+		RValueLabel.setBounds(395, 150 + 25, 200, 15);
 		add(RValueLabel);
 
-		MValueLabel.reshape(395, 165 + 25, 200, 15);
+		MValueLabel.setBounds(395, 165 + 25, 200, 15);
 		add(MValueLabel);
 
-		inMemTimeValueLabel.reshape(395, 180 + 25, 200, 15);
+		inMemTimeValueLabel.setBounds(395, 180 + 25, 200, 15);
 		add(inMemTimeValueLabel);
 
-		lastTouchTimeValueLabel.reshape(395, 195 + 25, 200, 15);
+		lastTouchTimeValueLabel.setBounds(395, 195 + 25, 200, 15);
 		add(lastTouchTimeValueLabel);
 
-		lowValueLabel.reshape(395, 210 + 25, 230, 15);
+		lowValueLabel.setBounds(395, 210 + 25, 230, 15);
 		add(lowValueLabel);
 
-		highValueLabel.reshape(395, 225 + 25, 230, 15);
+		highValueLabel.setBounds(395, 225 + 25, 230, 15);
 		add(highValueLabel);
 
 		Label virtualOneLabel = new Label("virtual", Label.CENTER);
-		virtualOneLabel.reshape(0, 15 + 25, 70, 15);
+		virtualOneLabel.setBounds(0, 15 + 25, 70, 15);
 		add(virtualOneLabel);
 
 		Label virtualTwoLabel = new Label("virtual", Label.CENTER);
-		virtualTwoLabel.reshape(140, 15 + 25, 70, 15);
+		virtualTwoLabel.setBounds(140, 15 + 25, 70, 15);
 		add(virtualTwoLabel);
 
 		Label physicalOneLabel = new Label("physical", Label.CENTER);
-		physicalOneLabel.reshape(70, 15 + 25, 70, 15);
+		physicalOneLabel.setBounds(70, 15 + 25, 70, 15);
 		add(physicalOneLabel);
 
 		Label physicalTwoLabel = new Label("physical", Label.CENTER);
-		physicalTwoLabel.reshape(210, 15 + 25, 70, 15);
+		physicalTwoLabel.setBounds(210, 15 + 25, 70, 15);
 		add(physicalTwoLabel);
 
 		Label statusLabel = new Label("status: ", Label.LEFT);
-		statusLabel.reshape(285, 0 + 25, 65, 15);
+		statusLabel.setBounds(285, 0 + 25, 65, 15);
 		add(statusLabel);
 
 		Label timeLabel = new Label("time: ", Label.LEFT);
-		timeLabel.reshape(285, 15 + 25, 50, 15);
+		timeLabel.setBounds(285, 15 + 25, 50, 15);
 		add(timeLabel);
 
 		Label instructionLabel = new Label("instruction: ", Label.LEFT);
-		instructionLabel.reshape(285, 45 + 25, 100, 15);
+		instructionLabel.setBounds(285, 45 + 25, 100, 15);
 		add(instructionLabel);
 
 		Label addressLabel = new Label("address: ", Label.LEFT);
-		addressLabel.reshape(285, 60 + 25, 85, 15);
+		addressLabel.setBounds(285, 60 + 25, 85, 15);
 		add(addressLabel);
 
 		Label pageFaultLabel = new Label("page fault: ", Label.LEFT);
-		pageFaultLabel.reshape(285, 90 + 25, 100, 15);
+		pageFaultLabel.setBounds(285, 90 + 25, 100, 15);
 		add(pageFaultLabel);
 
 		Label virtualPageLabel = new Label("virtual page: ", Label.LEFT);
-		virtualPageLabel.reshape(285, 120 + 25, 110, 15);
+		virtualPageLabel.setBounds(285, 120 + 25, 110, 15);
 		add(virtualPageLabel);
 
 		Label physicalPageLabel = new Label("physical page: ", Label.LEFT);
-		physicalPageLabel.reshape(285, 135 + 25, 110, 15);
+		physicalPageLabel.setBounds(285, 135 + 25, 110, 15);
 		add(physicalPageLabel);
 
 		Label RLabel = new Label("R: ", Label.LEFT);
-		RLabel.reshape(285, 150 + 25, 110, 15);
+		RLabel.setBounds(285, 150 + 25, 110, 15);
 		add(RLabel);
 
 		Label MLabel = new Label("M: ", Label.LEFT);
-		MLabel.reshape(285, 165 + 25, 110, 15);
+		MLabel.setBounds(285, 165 + 25, 110, 15);
 		add(MLabel);
 
 		Label inMemTimeLabel = new Label("inMemTime: ", Label.LEFT);
-		inMemTimeLabel.reshape(285, 180 + 25, 110, 15);
+		inMemTimeLabel.setBounds(285, 180 + 25, 110, 15);
 		add(inMemTimeLabel);
 
 		Label lastTouchTimeLabel = new Label("lastTouchTime: ", Label.LEFT);
-		lastTouchTimeLabel.reshape(285, 195 + 25, 110, 15);
+		lastTouchTimeLabel.setBounds(285, 195 + 25, 110, 15);
 		add(lastTouchTimeLabel);
 
 		Label lowLabel = new Label("low: ", Label.LEFT);
-		lowLabel.reshape(285, 210 + 25, 110, 15);
+		lowLabel.setBounds(285, 210 + 25, 110, 15);
 		add(lowLabel);
 
 		Label highLabel = new Label("high: ", Label.LEFT);
-		highLabel.reshape(285, 225 + 25, 110, 15);
+		highLabel.setBounds(285, 225 + 25, 110, 15);
 		add(highLabel);
 
-		l0.reshape(70, (2) * 15 + 25, 60, 15);
+		l0.setBounds(70, (2) * 15 + 25, 60, 15);
 		l0.setForeground(Color.red);
 		l0.setFont(new Font("Courier", 0, 10));
 		add(l0);
 
-		l1.reshape(70, (3) * 15 + 25, 60, 15);
+		l1.setBounds(70, (3) * 15 + 25, 60, 15);
 		l1.setForeground(Color.red);
 		l1.setFont(new Font("Courier", 0, 10));
 		add(l1);
 
-		l2.reshape(70, (4) * 15 + 25, 60, 15);
+		l2.setBounds(70, (4) * 15 + 25, 60, 15);
 		l2.setForeground(Color.red);
 		l2.setFont(new Font("Courier", 0, 10));
 		add(l2);
 
-		l3.reshape(70, (5) * 15 + 25, 60, 15);
+		l3.setBounds(70, (5) * 15 + 25, 60, 15);
 		l3.setForeground(Color.red);
 		l3.setFont(new Font("Courier", 0, 10));
 		add(l3);
 
-		l4.reshape(70, (6) * 15 + 25, 60, 15);
+		l4.setBounds(70, (6) * 15 + 25, 60, 15);
 		l4.setForeground(Color.red);
 		l4.setFont(new Font("Courier", 0, 10));
 		add(l4);
 
-		l5.reshape(70, (7) * 15 + 25, 60, 15);
+		l5.setBounds(70, (7) * 15 + 25, 60, 15);
 		l5.setForeground(Color.red);
 		l5.setFont(new Font("Courier", 0, 10));
 		add(l5);
 
-		l6.reshape(70, (8) * 15 + 25, 60, 15);
+		l6.setBounds(70, (8) * 15 + 25, 60, 15);
 		l6.setForeground(Color.red);
 		l6.setFont(new Font("Courier", 0, 10));
 		add(l6);
 
-		l7.reshape(70, (9) * 15 + 25, 60, 15);
+		l7.setBounds(70, (9) * 15 + 25, 60, 15);
 		l7.setForeground(Color.red);
 		l7.setFont(new Font("Courier", 0, 10));
 		add(l7);
 
-		l8.reshape(70, (10) * 15 + 25, 60, 15);
+		l8.setBounds(70, (10) * 15 + 25, 60, 15);
 		l8.setForeground(Color.red);
 		l8.setFont(new Font("Courier", 0, 10));
 		add(l8);
 
-		l9.reshape(70, (11) * 15 + 25, 60, 15);
+		l9.setBounds(70, (11) * 15 + 25, 60, 15);
 		l9.setForeground(Color.red);
 		l9.setFont(new Font("Courier", 0, 10));
 		add(l9);
 
-		l10.reshape(70, (12) * 15 + 25, 60, 15);
+		l10.setBounds(70, (12) * 15 + 25, 60, 15);
 		l10.setForeground(Color.red);
 		l10.setFont(new Font("Courier", 0, 10));
 		add(l10);
 
-		l11.reshape(70, (13) * 15 + 25, 60, 15);
+		l11.setBounds(70, (13) * 15 + 25, 60, 15);
 		l11.setForeground(Color.red);
 		l11.setFont(new Font("Courier", 0, 10));
 		add(l11);
 
-		l12.reshape(70, (14) * 15 + 25, 60, 15);
+		l12.setBounds(70, (14) * 15 + 25, 60, 15);
 		l12.setForeground(Color.red);
 		l12.setFont(new Font("Courier", 0, 10));
 		add(l12);
 
-		l13.reshape(70, (15) * 15 + 25, 60, 15);
+		l13.setBounds(70, (15) * 15 + 25, 60, 15);
 		l13.setForeground(Color.red);
 		l13.setFont(new Font("Courier", 0, 10));
 		add(l13);
 
-		l14.reshape(70, (16) * 15 + 25, 60, 15);
+		l14.setBounds(70, (16) * 15 + 25, 60, 15);
 		l14.setForeground(Color.red);
 		l14.setFont(new Font("Courier", 0, 10));
 		add(l14);
 
-		l15.reshape(70, (17) * 15 + 25, 60, 15);
+		l15.setBounds(70, (17) * 15 + 25, 60, 15);
 		l15.setForeground(Color.red);
 		l15.setFont(new Font("Courier", 0, 10));
 		add(l15);
 
-		l16.reshape(70, (18) * 15 + 25, 60, 15);
+		l16.setBounds(70, (18) * 15 + 25, 60, 15);
 		l16.setForeground(Color.red);
 		l16.setFont(new Font("Courier", 0, 10));
 		add(l16);
 
-		l17.reshape(70, (19) * 15 + 25, 60, 15);
+		l17.setBounds(70, (19) * 15 + 25, 60, 15);
 		l17.setForeground(Color.red);
 		l17.setFont(new Font("Courier", 0, 10));
 		add(l17);
 
-		l18.reshape(70, (20) * 15 + 25, 60, 15);
+		l18.setBounds(70, (20) * 15 + 25, 60, 15);
 		l18.setForeground(Color.red);
 		l18.setFont(new Font("Courier", 0, 10));
 		add(l18);
 
-		l19.reshape(70, (21) * 15 + 25, 60, 15);
+		l19.setBounds(70, (21) * 15 + 25, 60, 15);
 		l19.setForeground(Color.red);
 		l19.setFont(new Font("Courier", 0, 10));
 		add(l19);
 
-		l20.reshape(70, (22) * 15 + 25, 60, 15);
+		l20.setBounds(70, (22) * 15 + 25, 60, 15);
 		l20.setForeground(Color.red);
 		l20.setFont(new Font("Courier", 0, 10));
 		add(l20);
 
-		l21.reshape(70, (23) * 15 + 25, 60, 15);
+		l21.setBounds(70, (23) * 15 + 25, 60, 15);
 		l21.setForeground(Color.red);
 		l21.setFont(new Font("Courier", 0, 10));
 		add(l21);
 
-		l22.reshape(70, (24) * 15 + 25, 60, 15);
+		l22.setBounds(70, (24) * 15 + 25, 60, 15);
 		l22.setForeground(Color.red);
 		l22.setFont(new Font("Courier", 0, 10));
 		add(l22);
 
-		l23.reshape(70, (25) * 15 + 25, 60, 15);
+		l23.setBounds(70, (25) * 15 + 25, 60, 15);
 		l23.setForeground(Color.red);
 		l23.setFont(new Font("Courier", 0, 10));
 		add(l23);
 
-		l24.reshape(70, (26) * 15 + 25, 60, 15);
+		l24.setBounds(70, (26) * 15 + 25, 60, 15);
 		l24.setForeground(Color.red);
 		l24.setFont(new Font("Courier", 0, 10));
 		add(l24);
 
-		l25.reshape(70, (27) * 15 + 25, 60, 15);
+		l25.setBounds(70, (27) * 15 + 25, 60, 15);
 		l25.setForeground(Color.red);
 		l25.setFont(new Font("Courier", 0, 10));
 		add(l25);
 
-		l26.reshape(70, (28) * 15 + 25, 60, 15);
+		l26.setBounds(70, (28) * 15 + 25, 60, 15);
 		l26.setForeground(Color.red);
 		l26.setFont(new Font("Courier", 0, 10));
 		add(l26);
 
-		l27.reshape(70, (29) * 15 + 25, 60, 15);
+		l27.setBounds(70, (29) * 15 + 25, 60, 15);
 		l27.setForeground(Color.red);
 		l27.setFont(new Font("Courier", 0, 10));
 		add(l27);
 
-		l28.reshape(70, (30) * 15 + 25, 60, 15);
+		l28.setBounds(70, (30) * 15 + 25, 60, 15);
 		l28.setForeground(Color.red);
 		l28.setFont(new Font("Courier", 0, 10));
 		add(l28);
 
-		l29.reshape(70, (31) * 15 + 25, 60, 15);
+		l29.setBounds(70, (31) * 15 + 25, 60, 15);
 		l29.setForeground(Color.red);
 		l29.setFont(new Font("Courier", 0, 10));
 		add(l29);
 
-		l30.reshape(70, (32) * 15 + 25, 60, 15);
+		l30.setBounds(70, (32) * 15 + 25, 60, 15);
 		l30.setForeground(Color.red);
 		l30.setFont(new Font("Courier", 0, 10));
 		add(l30);
 
-		l31.reshape(70, (33) * 15 + 25, 60, 15);
+		l31.setBounds(70, (33) * 15 + 25, 60, 15);
 		l31.setForeground(Color.red);
 		l31.setFont(new Font("Courier", 0, 10));
 		add(l31);
 
-		l32.reshape(210, (2) * 15 + 25, 60, 15);
+		l32.setBounds(210, (2) * 15 + 25, 60, 15);
 		l32.setForeground(Color.red);
 		l32.setFont(new Font("Courier", 0, 10));
 		add(l32);
 
-		l33.reshape(210, (3) * 15 + 25, 60, 15);
+		l33.setBounds(210, (3) * 15 + 25, 60, 15);
 		l33.setForeground(Color.red);
 		l33.setFont(new Font("Courier", 0, 10));
 		add(l33);
 
-		l34.reshape(210, (4) * 15 + 25, 60, 15);
+		l34.setBounds(210, (4) * 15 + 25, 60, 15);
 		l34.setForeground(Color.red);
 		l34.setFont(new Font("Courier", 0, 10));
 		add(l34);
 
-		l35.reshape(210, (5) * 15 + 25, 60, 15);
+		l35.setBounds(210, (5) * 15 + 25, 60, 15);
 		l35.setForeground(Color.red);
 		l35.setFont(new Font("Courier", 0, 10));
 		add(l35);
 
-		l36.reshape(210, (6) * 15 + 25, 60, 15);
+		l36.setBounds(210, (6) * 15 + 25, 60, 15);
 		l36.setForeground(Color.red);
 		l36.setFont(new Font("Courier", 0, 10));
 		add(l36);
 
-		l37.reshape(210, (7) * 15 + 25, 60, 15);
+		l37.setBounds(210, (7) * 15 + 25, 60, 15);
 		l37.setForeground(Color.red);
 		l37.setFont(new Font("Courier", 0, 10));
 		add(l37);
 
-		l38.reshape(210, (8) * 15 + 25, 60, 15);
+		l38.setBounds(210, (8) * 15 + 25, 60, 15);
 		l38.setForeground(Color.red);
 		l38.setFont(new Font("Courier", 0, 10));
 		add(l38);
 
-		l39.reshape(210, (9) * 15 + 25, 60, 15);
+		l39.setBounds(210, (9) * 15 + 25, 60, 15);
 		l39.setForeground(Color.red);
 		l39.setFont(new Font("Courier", 0, 10));
 		add(l39);
 
-		l40.reshape(210, (10) * 15 + 25, 60, 15);
+		l40.setBounds(210, (10) * 15 + 25, 60, 15);
 		l40.setForeground(Color.red);
 		l40.setFont(new Font("Courier", 0, 10));
 		add(l40);
 
-		l41.reshape(210, (11) * 15 + 25, 60, 15);
+		l41.setBounds(210, (11) * 15 + 25, 60, 15);
 		l41.setForeground(Color.red);
 		l41.setFont(new Font("Courier", 0, 10));
 		add(l41);
 
-		l42.reshape(210, (12) * 15 + 25, 60, 15);
+		l42.setBounds(210, (12) * 15 + 25, 60, 15);
 		l42.setForeground(Color.red);
 		l42.setFont(new Font("Courier", 0, 10));
 		add(l42);
 
-		l43.reshape(210, (13) * 15 + 25, 60, 15);
+		l43.setBounds(210, (13) * 15 + 25, 60, 15);
 		l43.setForeground(Color.red);
 		l43.setFont(new Font("Courier", 0, 10));
 		add(l43);
 
-		l44.reshape(210, (14) * 15 + 25, 60, 15);
+		l44.setBounds(210, (14) * 15 + 25, 60, 15);
 		l44.setForeground(Color.red);
 		l44.setFont(new Font("Courier", 0, 10));
 		add(l44);
 
-		l45.reshape(210, (15) * 15 + 25, 60, 15);
+		l45.setBounds(210, (15) * 15 + 25, 60, 15);
 		l45.setForeground(Color.red);
 		l45.setFont(new Font("Courier", 0, 10));
 		add(l45);
 
-		l46.reshape(210, (16) * 15 + 25, 60, 15);
+		l46.setBounds(210, (16) * 15 + 25, 60, 15);
 		l46.setForeground(Color.red);
 		l46.setFont(new Font("Courier", 0, 10));
 		add(l46);
 
-		l47.reshape(210, (17) * 15 + 25, 60, 15);
+		l47.setBounds(210, (17) * 15 + 25, 60, 15);
 		l47.setForeground(Color.red);
 		l47.setFont(new Font("Courier", 0, 10));
 		add(l47);
 
-		l48.reshape(210, (18) * 15 + 25, 60, 15);
+		l48.setBounds(210, (18) * 15 + 25, 60, 15);
 		l48.setForeground(Color.red);
 		l48.setFont(new Font("Courier", 0, 10));
 		add(l48);
 
-		l49.reshape(210, (19) * 15 + 25, 60, 15);
+		l49.setBounds(210, (19) * 15 + 25, 60, 15);
 		l49.setForeground(Color.red);
 		l49.setFont(new Font("Courier", 0, 10));
 		add(l49);
 
-		l50.reshape(210, (20) * 15 + 25, 60, 15);
+		l50.setBounds(210, (20) * 15 + 25, 60, 15);
 		l50.setForeground(Color.red);
 		l50.setFont(new Font("Courier", 0, 10));
 		add(l50);
 
-		l51.reshape(210, (21) * 15 + 25, 60, 15);
+		l51.setBounds(210, (21) * 15 + 25, 60, 15);
 		l51.setForeground(Color.red);
 		l51.setFont(new Font("Courier", 0, 10));
 		add(l51);
 
-		l52.reshape(210, (22) * 15 + 25, 60, 15);
+		l52.setBounds(210, (22) * 15 + 25, 60, 15);
 		l52.setForeground(Color.red);
 		l52.setFont(new Font("Courier", 0, 10));
 		add(l52);
 
-		l53.reshape(210, (23) * 15 + 25, 60, 15);
+		l53.setBounds(210, (23) * 15 + 25, 60, 15);
 		l53.setForeground(Color.red);
 		l53.setFont(new Font("Courier", 0, 10));
 		add(l53);
 
-		l54.reshape(210, (24) * 15 + 25, 60, 15);
+		l54.setBounds(210, (24) * 15 + 25, 60, 15);
 		l54.setForeground(Color.red);
 		l54.setFont(new Font("Courier", 0, 10));
 		add(l54);
 
-		l55.reshape(210, (25) * 15 + 25, 60, 15);
+		l55.setBounds(210, (25) * 15 + 25, 60, 15);
 		l55.setForeground(Color.red);
 		l55.setFont(new Font("Courier", 0, 10));
 		add(l55);
 
-		l56.reshape(210, (26) * 15 + 25, 60, 15);
+		l56.setBounds(210, (26) * 15 + 25, 60, 15);
 		l56.setForeground(Color.red);
 		l56.setFont(new Font("Courier", 0, 10));
 		add(l56);
 
-		l57.reshape(210, (27) * 15 + 25, 60, 15);
+		l57.setBounds(210, (27) * 15 + 25, 60, 15);
 		l57.setForeground(Color.red);
 		l57.setFont(new Font("Courier", 0, 10));
 		add(l57);
 
-		l58.reshape(210, (28) * 15 + 25, 60, 15);
+		l58.setBounds(210, (28) * 15 + 25, 60, 15);
 		l58.setForeground(Color.red);
 		l58.setFont(new Font("Courier", 0, 10));
 		add(l58);
 
-		l59.reshape(210, (29) * 15 + 25, 60, 15);
+		l59.setBounds(210, (29) * 15 + 25, 60, 15);
 		l59.setForeground(Color.red);
 		l59.setFont(new Font("Courier", 0, 10));
 		add(l59);
 
-		l60.reshape(210, (30) * 15 + 25, 60, 15);
+		l60.setBounds(210, (30) * 15 + 25, 60, 15);
 		l60.setForeground(Color.red);
 		l60.setFont(new Font("Courier", 0, 10));
 		add(l60);
 
-		l61.reshape(210, (31) * 15 + 25, 60, 15);
+		l61.setBounds(210, (31) * 15 + 25, 60, 15);
 		l61.setForeground(Color.red);
 		l61.setFont(new Font("Courier", 0, 10));
 		add(l61);
 
-		l62.reshape(210, (32) * 15 + 25, 60, 15);
+		l62.setBounds(210, (32) * 15 + 25, 60, 15);
 		l62.setForeground(Color.red);
 		l62.setFont(new Font("Courier", 0, 10));
 		add(l62);
 
-		l63.reshape(210, (33) * 15 + 25, 60, 15);
+		l63.setBounds(210, (33) * 15 + 25, 60, 15);
 		l63.setForeground(Color.red);
 		l63.setFont(new Font("Courier", 0, 10));
 		add(l63);
 
 		kernel.init(commands, config);
 
-		show();
+		setVisible(true);
 	}
 
 	public void paintPage(Page page) {
@@ -1227,26 +1227,26 @@ public class ControlPanel extends Frame {
 	public boolean action(Event e, Object arg) {
 		if (e.target == runButton) {
 			setStatus("RUN");
-			runButton.disable();
-			stepButton.disable();
-			resetButton.disable();
+			runButton.setEnabled(false);
+			stepButton.setEnabled(false);
+			resetButton.setEnabled(false);
 			kernel.run();
 			setStatus("STOP");
-			resetButton.enable();
+			resetButton.setEnabled(true);
 			return true;
 		} else if (e.target == stepButton) {
 			setStatus("STEP");
 			kernel.step();
 			if (kernel.runcycles == kernel.runs) {
-				stepButton.disable();
-				runButton.disable();
+				stepButton.setEnabled(false);
+				runButton.setEnabled(false);
 			}
 			setStatus("STOP");
 			return true;
 		} else if (e.target == resetButton) {
 			kernel.reset();
-			runButton.enable();
-			stepButton.enable();
+			runButton.setEnabled(true);
+			stepButton.setEnabled(true);
 			return true;
 		} else if (e.target == exitButton) {
 			System.exit(0);

@@ -12,7 +12,7 @@ import java.util.*;
 public class PageFault {
 
 	/**
-	 * The page replacement algorithm for the memory management sumulator. This
+	 * The page replacement algorithm for the memory management simulator. This
 	 * method gets called whenever a page needs to be replaced.
 	 * <p>
 	 * The page replacement algorithm included with the simulator is FIFO
