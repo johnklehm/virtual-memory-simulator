@@ -4,6 +4,8 @@ import java.awt.Event;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Label;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -244,6 +246,14 @@ public class ControlPanel extends Frame {
 		Label highLabel = new Label("high: ", Label.LEFT);
 		highLabel.setBounds(285, 225 + 25, 110, 15);
 		add(highLabel);
+
+		// close with the X button
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				e.getWindow().dispose();
+			}
+		});
 
 		useKernel.initGUI();
 
