@@ -157,7 +157,7 @@ public class ControlPanel extends Frame {
 		super(title);
 	}
 
-	public void init(Kernel useKernel, String commands, String config) {
+	public void init(Kernel useKernel) {
 		kernel = useKernel;
 		kernel.setControlPanel(this);
 		setLayout(null);
@@ -933,10 +933,8 @@ public class ControlPanel extends Frame {
 		l63.setFont(new Font("Courier", 0, 10));
 		add(l63);
 
-		if (commands != null) {
-			kernel.init(commands, config);
-		}
-
+		useKernel.initGUI();
+		
 		setVisible(true);
 	}
 
@@ -1243,9 +1241,7 @@ public class ControlPanel extends Frame {
 			setStatus("STOP");
 			return true;
 		} else if (e.target == resetButton) {
-			kernel.reset();
-			runButton.setEnabled(true);
-			stepButton.setEnabled(true);
+			reset();
 			return true;
 		} else if (e.target == exitButton) {
 			System.exit(0);
@@ -1445,5 +1441,25 @@ public class ControlPanel extends Frame {
 		} else {
 			return false;
 		}
+	}
+	
+	private void reset() {
+		statusValueLabel.setText("STOP");
+		timeValueLabel.setText("0");
+		instructionValueLabel.setText("NONE");
+		addressValueLabel.setText("NULL");
+		pageFaultValueLabel.setText("NO");
+		virtualPageValueLabel.setText("x");
+		physicalPageValueLabel.setText("0");
+		RValueLabel.setText("0");
+		MValueLabel.setText("0");
+		inMemTimeValueLabel.setText("0");
+		lastTouchTimeValueLabel.setText("0");
+		lowValueLabel.setText("0");
+		highValueLabel.setText("0");
+
+		kernel.reset();
+		runButton.setEnabled(true);
+		stepButton.setEnabled(true);
 	}
 }
