@@ -1,4 +1,9 @@
-import java.awt.*;
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.Event;
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.Label;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +36,50 @@ public class ControlPanel extends Frame {
 
 	public ControlPanel(String title) {
 		super(title);
+	}
+
+	@Override
+	public boolean action(Event e, Object arg) {
+		if (e.target == runButton) {
+			setStatus("RUN");
+			runButton.setEnabled(false);
+			stepButton.setEnabled(false);
+			resetButton.setEnabled(false);
+			kernel.run();
+			setStatus("STOP");
+			resetButton.setEnabled(true);
+			return true;
+		} else if (e.target == stepButton) {
+			setStatus("STEP");
+			kernel.step();
+			if (kernel.runcycles == kernel.runs) {
+				stepButton.setEnabled(false);
+				runButton.setEnabled(false);
+			}
+			setStatus("STOP");
+			return true;
+		} else if (e.target == resetButton) {
+			reset();
+			return true;
+		} else if (e.target == exitButton) {
+			System.exit(0);
+			return true;
+		}
+
+		for (int i = 0; i < pageButtonList.size(); ++i) {
+			if (e.target == pageButtonList.get(i)) {
+				kernel.getPage(i);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public void addPhysicalPage(int pageNum, int physicalPage) {
+		if (physicalPage < pageLabelList.size()) {
+			pageLabelList.get(physicalPage).setText("page " + pageNum);
+		}
 	}
 
 	public void init(Kernel useKernel) {
@@ -212,57 +261,10 @@ public class ControlPanel extends Frame {
 		highValueLabel.setText(Long.toString(page.high, Kernel.addressradix));
 	}
 
-	public void setStatus(String status) {
-		statusValueLabel.setText(status);
-	}
-
-	public void addPhysicalPage(int pageNum, int physicalPage) {
-		if (physicalPage < pageLabelList.size()) {
-			pageLabelList.get(physicalPage).setText("page " + pageNum);
-		}
-	}
-
 	public void removePhysicalPage(int physicalPage) {
 		if (physicalPage < pageLabelList.size()) {
 			pageLabelList.get(physicalPage).setText(null);
 		}
-	}
-
-	public boolean action(Event e, Object arg) {
-		if (e.target == runButton) {
-			setStatus("RUN");
-			runButton.setEnabled(false);
-			stepButton.setEnabled(false);
-			resetButton.setEnabled(false);
-			kernel.run();
-			setStatus("STOP");
-			resetButton.setEnabled(true);
-			return true;
-		} else if (e.target == stepButton) {
-			setStatus("STEP");
-			kernel.step();
-			if (kernel.runcycles == kernel.runs) {
-				stepButton.setEnabled(false);
-				runButton.setEnabled(false);
-			}
-			setStatus("STOP");
-			return true;
-		} else if (e.target == resetButton) {
-			reset();
-			return true;
-		} else if (e.target == exitButton) {
-			System.exit(0);
-			return true;
-		}
-
-		for (int i = 0; i < pageButtonList.size(); ++i) {
-			if (e.target == pageButtonList.get(i)) {
-				kernel.getPage(i);
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private void reset() {
@@ -283,5 +285,9 @@ public class ControlPanel extends Frame {
 		kernel.reset();
 		runButton.setEnabled(true);
 		stepButton.setEnabled(true);
+	}
+
+	public void setStatus(String status) {
+		statusValueLabel.setText(status);
 	}
 }

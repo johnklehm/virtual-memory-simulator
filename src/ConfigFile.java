@@ -6,10 +6,8 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-
 public class ConfigFile {
-	private static final String ls = System
-	.getProperty("line.separator");
+	private static final String ls = System.getProperty("line.separator");
 	private boolean doStdoutLog;
 	private boolean doFileLog;
 	private byte addressradix = 16;
@@ -19,49 +17,49 @@ public class ConfigFile {
 	private long address_limit;
 	private String outputFileName;
 	Vector<Page> memVector;
-	
+
 	public ConfigFile(String fileName) {
 		outputFileName = "tracefile";
 		doFileLog = false;
 		virtPageNum = 63;
 		doStdoutLog = false;
-		block = (int) Math.pow(2,12);
+		block = (int) Math.pow(2, 12);
 		memVector = new Vector<Page>();
 		parse(fileName);
 	}
-	
-	public String getOutputFileName() {
-		return outputFileName;
-	}
-	
-	public Vector<Page> getMemory() {
-		return memVector;
-	}
-	
-	public int getPhysicalPageCount() {
-		return physicalPageCount;
-	}
-	
+
 	public long getAddressLimit() {
 		return address_limit;
 	}
-	
-	public boolean getStdoutLogginEnabled() {
-		return doStdoutLog;
-	}
-	
-	public boolean getFileLoggingEnabled() {
-		return doFileLog;
-	}
-	
-	public int getNumberVirtualPages() {
-		return virtPageNum;
-	}
-	
+
 	public int getBlockSize() {
 		return block;
 	}
-	
+
+	public boolean getFileLoggingEnabled() {
+		return doFileLog;
+	}
+
+	public Vector<Page> getMemory() {
+		return memVector;
+	}
+
+	public int getNumberVirtualPages() {
+		return virtPageNum;
+	}
+
+	public String getOutputFileName() {
+		return outputFileName;
+	}
+
+	public int getPhysicalPageCount() {
+		return physicalPageCount;
+	}
+
+	public boolean getStdoutLogginEnabled() {
+		return doStdoutLog;
+	}
+
 	public void parse(String config) {
 		String tmp = null;
 		String line;
@@ -74,11 +72,11 @@ public class ConfigFile {
 		int inMemTime = 0;
 		byte R = 0;
 		byte M = 0;
-		
+
 		int lastTouchTime = 0;
 
 		address_limit = (block * (virtPageNum + 1)) - 1;
-		
+
 		if (config != null) {
 			f = new File(config);
 
@@ -103,7 +101,8 @@ public class ConfigFile {
 				}
 				in.close();
 			} catch (IOException e) {
-				System.out.println("Error parsing numphyspages setting: " + e.getMessage());
+				System.out.println("Error parsing numphyspages setting: "
+						+ e.getMessage());
 			}
 
 			try {
@@ -127,10 +126,7 @@ public class ConfigFile {
 				in.close();
 			} catch (IOException e) { /* Handle exceptions */
 			}
-			
-			
-			
-			
+
 			for (i = 0; i <= virtPageNum; i++) {
 				high = (block * (i + 1)) - 1;
 				low = block * i;
@@ -155,17 +151,19 @@ public class ConfigFile {
 							}
 							if ((0 > id || id > virtPageNum)
 									|| (-1 > currentPhysicalPage || currentPhysicalPage > (physicalPageCount))) {
-								System.out.printf("id:%d curPhys:%d virtPageNum:%d phyPageCount:%d%s", id,
-										currentPhysicalPage, virtPageNum,
-										physicalPageCount, ls);
+								System.out
+										.printf(
+												"id:%d curPhys:%d virtPageNum:%d phyPageCount:%d%s",
+												id, currentPhysicalPage,
+												virtPageNum, physicalPageCount,
+												ls);
 								System.out
 										.println("MemoryManagement: Invalid page value in "
 												+ config
 												+ " "
 												+ id
 												+ ls
-												+ "Line:"
-												+ line);
+												+ "Line:" + line);
 								System.exit(-1);
 							}
 							R = Common.s2b(st.nextToken());
@@ -196,7 +194,7 @@ public class ConfigFile {
 												+ config);
 								System.exit(-1);
 							}
-							Page page = (Page) memVector.elementAt(id);
+							Page page = memVector.elementAt(id);
 							page.physical = currentPhysicalPage;
 							page.R = R;
 							page.M = M;
@@ -231,11 +229,11 @@ public class ConfigFile {
 						while (st.hasMoreTokens()) {
 							tmp = st.nextToken();
 						}
-						
+
 						block = Common.s2i(tmp);
 						address_limit = (block * (virtPageNum + 1)) - 1;
-						System.out.println("Block size " + block
-								+ "Limit: " + address_limit);
+						System.out.println("Block size " + block + "Limit: "
+								+ address_limit);
 
 						if (block < 64 || block > Math.pow(2, 26)) {
 							System.out

@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class CompressAddressSpace {
 	public static void main(String args[]) throws FileNotFoundException {
 		if (args.length < 1) {
-			System.out.println
-				("Usage: java CompressAddressSpace <TRACEFILE> [MAX_ADDRESSSPACE_HEX]");
+			System.out
+					.println("Usage: java CompressAddressSpace <TRACEFILE> [MAX_ADDRESSSPACE_HEX]");
 		} else {
 			Scanner in = new Scanner(new File(args[0]));
 			long maxAddress = 0xFFFFFFFF;
