@@ -1,16 +1,16 @@
-import java.lang.Thread;
-import java.io.*;
-import java.util.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Vector;
 
 public class Kernel extends Thread {
 
-	//virtual pages should always be at least twice physical pages
+	// virtual pages should always be at least twice physical pages
 	private static int virtPageNum = 2;
 	private int physicalPageCount = 1;
 
 	private String output;
-	private static final String ls = System
-			.getProperty("line.separator");
+	private static final String ls = System.getProperty("line.separator");
 	private String configFileName;
 	private String commandFileName;
 	private ControlPanel controlPanel;
@@ -18,7 +18,7 @@ public class Kernel extends Thread {
 	private Vector<Instruction> instructVector;
 	private boolean doStdoutLog = false;
 	private boolean doFileLog = false;
-	private int block = (int) Math.pow(2,12);
+	private int block = (int) Math.pow(2, 12);
 	private long address_limit = 16384;
 	public int runs;
 	public int runcycles;
@@ -29,10 +29,20 @@ public class Kernel extends Thread {
 		commandFileName = commFileName;
 		memVector = new Vector<Page>();
 		instructVector = new Vector<Instruction>();
-		
+
 		init();
 	}
-	
+
+	public void getPage(int pageNum) {
+		Page page;
+		try {
+			page = memVector.elementAt(pageNum);
+		} catch (Exception e) {
+			page = new Page(pageNum, 0, (byte) 0, (byte) 0, 0, 0, 0, 0);
+		}
+		controlPanel.paintPage(page);
+	}
+
 	private void init() {
 		if (configFileName != null) {
 			ConfigFile cf = new ConfigFile(configFileName);
@@ -45,27 +55,23 @@ public class Kernel extends Thread {
 			block = cf.getBlockSize();
 			// pull predefined address space from the config file
 			memVector = cf.getMemory();
-			
-			System.out.printf(
-				"ConfigFile:" + ls +
-				"addrLim: %d" + ls +
-				"PhysicalPageCount: %d" + ls +
-				"VirtualPageCount: %d" + ls +
-				"OutFile: %s" + ls +
-				"LogStdout: %b" + ls +
-				"FileLog: %b" + ls,
-				address_limit, physicalPageCount, virtPageNum, output, doStdoutLog, doFileLog);
+
+			System.out.printf("ConfigFile:" + ls + "addrLim: %d" + ls
+					+ "PhysicalPageCount: %d" + ls + "VirtualPageCount: %d"
+					+ ls + "OutFile: %s" + ls + "LogStdout: %b" + ls
+					+ "FileLog: %b" + ls, address_limit, physicalPageCount,
+					virtPageNum, output, doStdoutLog, doFileLog);
 		}
-		
-		if (commandFileName != null) {			
+
+		if (commandFileName != null) {
 			MOSSFile mf = new MOSSFile(commandFileName, address_limit);
 			instructVector = mf.getInstructions();
 		}
-		
-		//check memory space for errors
+
+		// check memory space for errors
 		validate();
 	}
-	
+
 	public void initGUI() {
 		// update gui with physical page settings
 		for (int i = 0; i < memVector.size(); i++) {
@@ -77,82 +83,16 @@ public class Kernel extends Thread {
 			}
 		}
 	}
-	
-	private void validate() {
-		// were done if there's nothing here
-		if (memVector.size() == 0 || instructVector.size() == 0) {
-			return;
-		}
-		
-		int physical_count = 0;
-		int map_count = 0;
-		long high = 0;
-		long low = 0;
-	
-		// adjust map count per number of physical pages == -1
-		if (map_count < physicalPageCount) {
-			for (int i = 0; i < virtPageNum; i++) {
-				Page page = memVector.elementAt(i);
-				if (page.physical == -1 && map_count < physicalPageCount) {
-					page.physical = i;
-					map_count++;
-				}
-			}
-		}
-		long runcycles = instructVector.size();
-		if (runcycles < 1) {
-			System.out
-					.println("MemoryManagement: no instructions present for execution.");
-			System.exit(-1);
-		}
-		
-		//
-		for (int i = 0; i < virtPageNum; i++) {
-			Page page = memVector.elementAt(i);
-			if (page.physical != -1) {
-				map_count++;
-			}
-			for (int j = 0; j < virtPageNum; j++) {
-				Page tmp_page = memVector.elementAt(j);
-				if (tmp_page.physical == page.physical && page.physical >= 0) {
-					physical_count++;
-				}
-			}
-			if (physical_count > 1) {
-				System.out
-						.println("MemoryManagement: Duplicate physical page's in "
-								+ configFileName);
-				System.exit(-1);
-			}
-			physical_count = 0;
-		}
-		
-		// validate instruction boundaries
-		for (int i = 0; i < instructVector.size(); i++) {
-			high = block * (virtPageNum + 1);
-			Instruction instruct = (Instruction) instructVector.elementAt(i);
-			if (instruct.addr < 0 || instruct.addr > high) {
-				System.out
-						.printf(
-								"MemoryManagement: Instruction (%s %x) out of bounds. Range: %x %x%s",
-								instruct.inst, instruct.addr, low, high, ls);
-				System.exit(-1);
-			}
-		}
-	}
 
-	public void setControlPanel(ControlPanel newControlPanel) {
-		controlPanel = newControlPanel;
-	}
-
-	public void getPage(int pageNum) {
-		Page page;
+	private void printLogFile(String message) {
 		try {
-			page = (Page) memVector.elementAt(pageNum);
-		} catch (Exception e) {
-			page = new Page(pageNum, 0, (byte)0, (byte)0, 0, 0, 0, 0);
+			PrintStream out = new PrintStream(
+					new FileOutputStream(output, true));
+			out.println(message);
+			out.close();
+		} catch (IOException e) {
+			/* Do nothing */
 		}
-		controlPanel.paintPage(page);
 	}
 
 	private void printPageFaultCount() {
@@ -169,23 +109,36 @@ public class Kernel extends Thread {
 		}
 	}
 
-	private void printLogFile(String message) {
-		try {
-			PrintStream out = new PrintStream(
-					new FileOutputStream(output, true));
-			out.println(message);
-			out.close();
-		} catch (IOException e) {
-			/* Do nothing */
-		}
+	public void reset() {
+		memVector.removeAllElements();
+		instructVector.removeAllElements();
+		controlPanel.statusValueLabel.setText("STOP");
+		controlPanel.timeValueLabel.setText("0");
+		controlPanel.instructionValueLabel.setText("NONE");
+		controlPanel.addressValueLabel.setText("NULL");
+		controlPanel.pageFaultValueLabel.setText("NO");
+		controlPanel.virtualPageValueLabel.setText("x");
+		controlPanel.physicalPageValueLabel.setText("0");
+		controlPanel.RValueLabel.setText("0");
+		controlPanel.MValueLabel.setText("0");
+		controlPanel.inMemTimeValueLabel.setText("0");
+		controlPanel.lastTouchTimeValueLabel.setText("0");
+		controlPanel.lowValueLabel.setText("0");
+		controlPanel.highValueLabel.setText("0");
+		init();
 	}
 
+	@Override
 	public void run() {
 		step();
 		while (runs != runcycles) {
 			step();
 		}
 		printPageFaultCount();
+	}
+
+	public void setControlPanel(ControlPanel newControlPanel) {
+		controlPanel = newControlPanel;
 	}
 
 	public void step() {
@@ -200,7 +153,7 @@ public class Kernel extends Thread {
 			controlPanel.pageFaultValueLabel.setText("NO");
 		}
 		if (instruct.inst.startsWith("READ")) {
-			Page page = (Page) memVector.elementAt(Virtual2Physical.pageNum(
+			Page page = memVector.elementAt(Virtual2Physical.pageNum(
 					instruct.addr, virtPageNum, block));
 			if (page.physical == -1) {
 				if (doFileLog) {
@@ -233,7 +186,7 @@ public class Kernel extends Thread {
 			}
 		}
 		if (instruct.inst.startsWith("WRITE")) {
-			Page page = (Page) memVector.elementAt(Virtual2Physical.pageNum(
+			Page page = memVector.elementAt(Virtual2Physical.pageNum(
 					instruct.addr, virtPageNum, block));
 			if (page.physical == -1) {
 				if (doFileLog) {
@@ -266,7 +219,7 @@ public class Kernel extends Thread {
 			}
 		}
 		for (i = 0; i < virtPageNum; i++) {
-			Page page = (Page) memVector.elementAt(i);
+			Page page = memVector.elementAt(i);
 			if (page.R == 1 && page.lastTouchTime == 10) {
 				page.R = 0;
 			}
@@ -280,22 +233,66 @@ public class Kernel extends Thread {
 				+ " (ns)");
 	}
 
-	public void reset() {
-		memVector.removeAllElements();
-		instructVector.removeAllElements();
-		controlPanel.statusValueLabel.setText("STOP");
-		controlPanel.timeValueLabel.setText("0");
-		controlPanel.instructionValueLabel.setText("NONE");
-		controlPanel.addressValueLabel.setText("NULL");
-		controlPanel.pageFaultValueLabel.setText("NO");
-		controlPanel.virtualPageValueLabel.setText("x");
-		controlPanel.physicalPageValueLabel.setText("0");
-		controlPanel.RValueLabel.setText("0");
-		controlPanel.MValueLabel.setText("0");
-		controlPanel.inMemTimeValueLabel.setText("0");
-		controlPanel.lastTouchTimeValueLabel.setText("0");
-		controlPanel.lowValueLabel.setText("0");
-		controlPanel.highValueLabel.setText("0");
-		init();
+	private void validate() {
+		// were done if there's nothing here
+		if (memVector.size() == 0 || instructVector.size() == 0) {
+			return;
+		}
+
+		int physical_count = 0;
+		int map_count = 0;
+		long high = 0;
+		long low = 0;
+
+		// adjust map count per number of physical pages == -1
+		if (map_count < physicalPageCount) {
+			for (int i = 0; i < virtPageNum; i++) {
+				Page page = memVector.elementAt(i);
+				if (page.physical == -1 && map_count < physicalPageCount) {
+					page.physical = i;
+					map_count++;
+				}
+			}
+		}
+		long runcycles = instructVector.size();
+		if (runcycles < 1) {
+			System.out
+					.println("MemoryManagement: no instructions present for execution.");
+			System.exit(-1);
+		}
+
+		//
+		for (int i = 0; i < virtPageNum; i++) {
+			Page page = memVector.elementAt(i);
+			if (page.physical != -1) {
+				map_count++;
+			}
+			for (int j = 0; j < virtPageNum; j++) {
+				Page tmp_page = memVector.elementAt(j);
+				if (tmp_page.physical == page.physical && page.physical >= 0) {
+					physical_count++;
+				}
+			}
+			if (physical_count > 1) {
+				System.out
+						.println("MemoryManagement: Duplicate physical page's in "
+								+ configFileName);
+				System.exit(-1);
+			}
+			physical_count = 0;
+		}
+
+		// validate instruction boundaries
+		for (int i = 0; i < instructVector.size(); i++) {
+			high = block * (virtPageNum + 1);
+			Instruction instruct = instructVector.elementAt(i);
+			if (instruct.addr < 0 || instruct.addr > high) {
+				System.out
+						.printf(
+								"MemoryManagement: Instruction (%s %x) out of bounds. Range: %x %x%s",
+								instruct.inst, instruct.addr, low, high, ls);
+				System.exit(-1);
+			}
+		}
 	}
 }

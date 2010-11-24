@@ -6,14 +6,11 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-
 public class MOSSFile {
 	private String fileName;
-	private static final String ls = System
-	.getProperty("line.separator");
+	private static final String ls = System.getProperty("line.separator");
 	private Vector<Instruction> instructVector;
 	private long address_limit;
-
 
 	public MOSSFile(String fName, long addrlim) {
 		fileName = fName;
@@ -21,7 +18,7 @@ public class MOSSFile {
 		instructVector = new Vector<Instruction>();
 		parse();
 	}
-	
+
 	public Vector<Instruction> getInstructions() {
 		return instructVector;
 	}
@@ -30,7 +27,7 @@ public class MOSSFile {
 		String line;
 		String tmp = null;
 		String command = "";
-		
+
 		// parse memory file
 		File f = new File(fileName);
 		try {
@@ -54,7 +51,7 @@ public class MOSSFile {
 					tmp = st.nextToken();
 					tmp = st.nextToken();
 					long addr = 0;
-					
+
 					if (tmp.startsWith("random")) {
 						instructVector.addElement(new Instruction(command,
 								Common.randomLong(address_limit)));

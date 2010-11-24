@@ -1,12 +1,12 @@
 // The main MemoryManagement program, created by Alexander Reeder, 2000 Nov 19
 
-import java.io.*;
+import java.io.File;
 
 public class VirtualMemorySimulatorCLI {
 	public static void main(String[] args) {
 		if (args.length < 1 || args.length > 2) {
 			System.out
-			.println("Usage: 'java MemoryManagement <COMMAND FILE> <PROPERTIES FILE>'");
+					.println("Usage: 'java MemoryManagement <COMMAND FILE> <PROPERTIES FILE>'");
 			System.exit(-1);
 		}
 
