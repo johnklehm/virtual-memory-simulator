@@ -5,9 +5,9 @@ public class VirtualMemorySimulatorGUI {
 		ControlPanel panel;
 		Kernel kernel;
 
-		kernel = new Kernel();
+		kernel = new Kernel(null, null);
 		panel = new ControlPanel();
 
-		panel.init(kernel, null, null);
+		panel.init(kernel);
 	}
 }

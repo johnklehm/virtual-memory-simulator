@@ -4,8 +4,6 @@ import java.io.*;
 
 public class VirtualMemorySimulatorCLI {
 	public static void main(String[] args) {
-		Kernel kernel;
-
 		if (args.length < 1 || args.length > 2) {
 			System.out
 			.println("Usage: 'java MemoryManagement <COMMAND FILE> <PROPERTIES FILE>'");
@@ -40,11 +38,10 @@ public class VirtualMemorySimulatorCLI {
 			}
 		}
 
-		kernel = new Kernel();
 		if (args.length == 1) {
-			kernel.init(args[0], null);
+			new Kernel(args[0], null);
 		} else {
-			kernel.init(args[0], args[1]);
+			new Kernel(args[0], args[1]);
 		}
 	}
 }

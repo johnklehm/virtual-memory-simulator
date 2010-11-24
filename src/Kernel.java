@@ -3,120 +3,116 @@ import java.io.*;
 import java.util.*;
 
 public class Kernel extends Thread {
-	// The number of virtual pages must be fixed at 63 due to
-	// dependencies in the GUI
-	private static int virtPageNum = 63;
+
+	//virtual pages should always be at least twice physical pages
+	private static int virtPageNum = 2;
+	private int physicalPageCount = 1;
 
 	private String output;
 	private static final String ls = System
 			.getProperty("line.separator");
-	private String command_file;
-	private String config_file;
+	private String configFileName;
+	private String commandFileName;
 	private ControlPanel controlPanel;
 	private Vector<Page> memVector;
-	private Vector<Instruction> instructVector = new Vector<Instruction>();
+	private Vector<Instruction> instructVector;
 	private boolean doStdoutLog = false;
 	private boolean doFileLog = false;
+	private int block = (int) Math.pow(2,12);
+	private long address_limit = 16384;
 	public int runs;
 	public int runcycles;
-	public long block = (int) Math.pow(2, 12);
 	public static byte addressradix = 16;
 
-	public void init(String commands, String config) {
-		File f = new File(commands);
-		command_file = commands;
-		config_file = config;
-		String line;
-		String tmp = null;
-		String command = "";
-		int i = 0;
-		int j = 0;
+	public Kernel(String confFileName, String commFileName) {
+		configFileName = confFileName;
+		commandFileName = commFileName;
+		memVector = new Vector<Page>();
+		instructVector = new Vector<Instruction>();
+		
+		init();
+	}
+	
+	private void init() {
+		if (configFileName != null) {
+			ConfigFile cf = new ConfigFile(configFileName);
+			address_limit = cf.getAddressLimit();
+			physicalPageCount = cf.getPhysicalPageCount();
+			virtPageNum = cf.getNumberVirtualPages();
+			output = cf.getOutputFileName();
+			doStdoutLog = cf.getStdoutLogginEnabled();
+			doFileLog = cf.getFileLoggingEnabled();
+			block = cf.getBlockSize();
+			// pull predefined address space from the config file
+			memVector = cf.getMemory();
+			
+			System.out.printf(
+				"ConfigFile:" + ls +
+				"addrLim: %d" + ls +
+				"PhysicalPageCount: %d" + ls +
+				"VirtualPageCount: %d" + ls +
+				"OutFile: %s" + ls +
+				"LogStdout: %b" + ls +
+				"FileLog: %b" + ls,
+				address_limit, physicalPageCount, virtPageNum, output, doStdoutLog, doFileLog);
+		}
+		
+		if (commandFileName != null) {			
+			MOSSFile mf = new MOSSFile(commandFileName, address_limit);
+			instructVector = mf.getInstructions();
+		}
+		
+		//check memory space for errors
+		validate();
+	}
+	
+	public void initGUI() {
+		// update gui with physical page settings
+		for (int i = 0; i < memVector.size(); i++) {
+			Page page = memVector.elementAt(i);
+			if (page.physical == -1) {
+				controlPanel.removePhysicalPage(i);
+			} else {
+				controlPanel.addPhysicalPage(i, page.physical);
+			}
+		}
+	}
+	
+	private void validate() {
+		// were done if there's nothing here
+		if (memVector.size() == 0 || instructVector.size() == 0) {
+			return;
+		}
+		
 		int physical_count = 0;
 		int map_count = 0;
 		long high = 0;
 		long low = 0;
-
-
-		ConfigFile cf = new ConfigFile(config);
-		long address_limit = cf.getAddressLimit();
-		int physicalPageCount = cf.getPhysicalPageCount();
-		output = cf.getOutputFileName();
-		doStdoutLog = cf.getStdoutLogginEnabled();
-		doFileLog = cf.getFileLoggingEnabled();
-
-		// pull predefined address space from the config file
-		memVector = cf.getMemory();
-		
-		// parse memory file
-		f = new File(commands);
-		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					new FileInputStream(f)));
-			int lcount = 0;
-			while ((line = in.readLine()) != null) {
-				lcount++;
-				if ((lcount % 100) == 0) {
-					System.out.printf("Line %d%s", lcount, ls);
-				}
-
-				if (line.startsWith("READ") || line.startsWith("WRITE")) {
-					if (line.startsWith("READ")) {
-						command = "READ";
-					}
-					if (line.startsWith("WRITE")) {
-						command = "WRITE";
-					}
-					StringTokenizer st = new StringTokenizer(line);
-					tmp = st.nextToken();
-					tmp = st.nextToken();
-					long addr = 0;
-					
-					if (tmp.startsWith("random")) {
-						instructVector.addElement(new Instruction(command,
-								Common.randomLong(address_limit)));
-					} else {
-						if (tmp.startsWith("bin")) {
-							addr = Long.parseLong(st.nextToken(), 2);
-						} else if (tmp.startsWith("oct")) {
-							addr = Long.parseLong(st.nextToken(), 8);
-						} else if (tmp.startsWith("hex")) {
-							addr = Long.parseLong(st.nextToken(), 16);
-						} else {
-							addr = Long.parseLong(tmp);
-						}
-
-						if (0 > addr || addr > address_limit) {
-							System.out
-									.printf(
-											"MemoryManagement: %x , Address out of range in %s.  Max address %x.",
-											addr, commands, address_limit);
-							System.exit(-1);
-						}
-						instructVector
-								.addElement(new Instruction(command, addr));
-					}
+	
+		// adjust map count per number of physical pages == -1
+		if (map_count < physicalPageCount) {
+			for (int i = 0; i < virtPageNum; i++) {
+				Page page = memVector.elementAt(i);
+				if (page.physical == -1 && map_count < physicalPageCount) {
+					page.physical = i;
+					map_count++;
 				}
 			}
-			in.close();
-		} catch (IOException e) { /* Handle exceptions */
 		}
-		runcycles = instructVector.size();
+		long runcycles = instructVector.size();
 		if (runcycles < 1) {
 			System.out
 					.println("MemoryManagement: no instructions present for execution.");
 			System.exit(-1);
 		}
-		if (doFileLog) {
-			File trace = new File(output);
-			trace.delete();
-		}
-		runs = 0;
-		for (i = 0; i < virtPageNum; i++) {
+		
+		//
+		for (int i = 0; i < virtPageNum; i++) {
 			Page page = memVector.elementAt(i);
 			if (page.physical != -1) {
 				map_count++;
 			}
-			for (j = 0; j < virtPageNum; j++) {
+			for (int j = 0; j < virtPageNum; j++) {
 				Page tmp_page = memVector.elementAt(j);
 				if (tmp_page.physical == page.physical && page.physical >= 0) {
 					physical_count++;
@@ -125,29 +121,14 @@ public class Kernel extends Thread {
 			if (physical_count > 1) {
 				System.out
 						.println("MemoryManagement: Duplicate physical page's in "
-								+ config);
+								+ configFileName);
 				System.exit(-1);
 			}
 			physical_count = 0;
 		}
-		if (map_count < physicalPageCount) {
-			for (i = 0; i < virtPageNum; i++) {
-				Page page = memVector.elementAt(i);
-				if (page.physical == -1 && map_count < physicalPageCount) {
-					page.physical = i;
-					map_count++;
-				}
-			}
-		}
-		for (i = 0; i < virtPageNum; i++) {
-			Page page = memVector.elementAt(i);
-			if (page.physical == -1) {
-				controlPanel.removePhysicalPage(i);
-			} else {
-				controlPanel.addPhysicalPage(i, page.physical);
-			}
-		}
-		for (i = 0; i < instructVector.size(); i++) {
+		
+		// validate instruction boundaries
+		for (int i = 0; i < instructVector.size(); i++) {
 			high = block * (virtPageNum + 1);
 			Instruction instruct = (Instruction) instructVector.elementAt(i);
 			if (instruct.addr < 0 || instruct.addr > high) {
@@ -165,7 +146,12 @@ public class Kernel extends Thread {
 	}
 
 	public void getPage(int pageNum) {
-		Page page = (Page) memVector.elementAt(pageNum);
+		Page page;
+		try {
+			page = (Page) memVector.elementAt(pageNum);
+		} catch (Exception e) {
+			page = new Page(pageNum, 0, (byte)0, (byte)0, 0, 0, 0, 0);
+		}
 		controlPanel.paintPage(page);
 	}
 
@@ -310,6 +296,6 @@ public class Kernel extends Thread {
 		controlPanel.lastTouchTimeValueLabel.setText("0");
 		controlPanel.lowValueLabel.setText("0");
 		controlPanel.highValueLabel.setText("0");
-		init(command_file, config_file);
+		init();
 	}
 }

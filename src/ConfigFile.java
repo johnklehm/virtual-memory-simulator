@@ -14,8 +14,8 @@ public class ConfigFile {
 	private boolean doFileLog;
 	private byte addressradix = 16;
 	private int virtPageNum;
-	private int physicalPageCount;
-	private long block;
+	private int physicalPageCount = -1;
+	private int block;
 	private long address_limit;
 	private String outputFileName;
 	Vector<Page> memVector;
@@ -23,9 +23,9 @@ public class ConfigFile {
 	public ConfigFile(String fileName) {
 		outputFileName = "tracefile";
 		doFileLog = false;
+		virtPageNum = 63;
 		doStdoutLog = false;
 		block = (int) Math.pow(2,12);
-		address_limit = (block * (virtPageNum + 1)) - 1;
 		memVector = new Vector<Page>();
 		parse(fileName);
 	}
@@ -54,6 +54,14 @@ public class ConfigFile {
 		return doFileLog;
 	}
 	
+	public int getNumberVirtualPages() {
+		return virtPageNum;
+	}
+	
+	public int getBlockSize() {
+		return block;
+	}
+	
 	public void parse(String config) {
 		String tmp = null;
 		String line;
@@ -66,12 +74,10 @@ public class ConfigFile {
 		int inMemTime = 0;
 		byte R = 0;
 		byte M = 0;
-
-		int physicalPageCount = 2;
 		
 		int lastTouchTime = 0;
 
-		double power = 14;
+		address_limit = (block * (virtPageNum + 1)) - 1;
 		
 		if (config != null) {
 			f = new File(config);
@@ -84,17 +90,20 @@ public class ConfigFile {
 						StringTokenizer st = new StringTokenizer(line);
 						while (st.hasMoreTokens()) {
 							tmp = st.nextToken();
-							physicalPageCount = Common.s2i(st.nextToken());
-							if (physicalPageCount < 2 || physicalPageCount > 63) {
-								System.out
-										.println("MemoryManagement: physicalPageCount out of bounds.");
-								System.exit(-1);
-							}
+						}
+
+						physicalPageCount = Common.s2i(tmp);
+
+						if (physicalPageCount < 2 || physicalPageCount > 63) {
+							System.out
+									.println("MemoryManagement: physicalPageCount out of bounds.");
+							System.exit(-1);
 						}
 					}
 				}
 				in.close();
-			} catch (IOException e) { /* Handle exceptions */
+			} catch (IOException e) {
+				System.out.println("Error parsing numphyspages setting: " + e.getMessage());
 			}
 
 			try {
@@ -146,7 +155,7 @@ public class ConfigFile {
 							}
 							if ((0 > id || id > virtPageNum)
 									|| (-1 > currentPhysicalPage || currentPhysicalPage > (physicalPageCount))) {
-								System.out.printf("%d %d %d %d %s", id,
+								System.out.printf("id:%d curPhys:%d virtPageNum:%d phyPageCount:%d%s", id,
 										currentPhysicalPage, virtPageNum,
 										physicalPageCount, ls);
 								System.out
@@ -154,6 +163,7 @@ public class ConfigFile {
 												+ config
 												+ " "
 												+ id
+												+ ls
 												+ "Line:"
 												+ line);
 								System.exit(-1);
@@ -220,19 +230,13 @@ public class ConfigFile {
 						StringTokenizer st = new StringTokenizer(line);
 						while (st.hasMoreTokens()) {
 							tmp = st.nextToken();
-							tmp = st.nextToken();
-							if (tmp.startsWith("power")) {
-								power = (double) Integer.parseInt(st
-										.nextToken());
-								block = (int) Math.pow(2, power);
-
-							} else {
-								block = Long.parseLong(tmp, 10);
-							}
-							address_limit = (block * (virtPageNum + 1)) - 1;
-							System.out.println("Block size " + block
-									+ "Limit: " + address_limit);
 						}
+						
+						block = Common.s2i(tmp);
+						address_limit = (block * (virtPageNum + 1)) - 1;
+						System.out.println("Block size " + block
+								+ "Limit: " + address_limit);
+
 						if (block < 64 || block > Math.pow(2, 26)) {
 							System.out
 									.println("MemoryManagement: pagesize is out of bounds");
