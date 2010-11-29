@@ -123,7 +123,7 @@ public class ConfigFile {
 						while (st.hasMoreTokens()) {
 							tmp = st.nextToken();
 							virtualPageCount = Common.s2i(st.nextToken());
-							if (virtualPageCount < 2 || virtualPageCount > 63) {
+							if (virtualPageCount < 2 || virtualPageCount > 64) {
 								// TODO throw Exception parse error
 								System.out
 										.println("MemoryManagement: numpages out of bounds.");
@@ -137,7 +137,7 @@ public class ConfigFile {
 							tmp = st.nextToken();
 						}
 						physicalPageCount = Common.s2i(tmp);
-						if (physicalPageCount < 1 || physicalPageCount > 63) {
+						if (physicalPageCount < 1 || physicalPageCount > 32) {
 							// TODO throw Exception parse error
 							System.out
 									.println("MemoryManagement: physicalPageCount out of bounds.");

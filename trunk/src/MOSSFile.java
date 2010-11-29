@@ -3,83 +3,65 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
-public class MOSSFile {
-	private String fileName;
-	private static final String ls = System.getProperty("line.separator");
-	private List<Instruction> instructions;
-	private long address_limit;
-
-	public MOSSFile(String fName, long addrlim) {
-		fileName = fName;
-		address_limit = addrlim;
-		instructions = new ArrayList<Instruction>();
-		parse();
-	}
-
-	public List<Instruction> getInstructions() {
-		return instructions;
-	}
-
-	private void parse() {
-		String line;
-		String tmp = null;
-		String command = "";
-
-		// parse memory file
+public class MOSSFile extends TraceFile {
+	public MOSSFile(String fName, long addrlim) throws
+			IOException, ParseException, NumberFormatException {
+		super(fName, addrlim);
 		File f = new File(fileName);
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				new FileInputStream(f)));
 		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					new FileInputStream(f)));
-			int lcount = 0;
+			String line;
 			while ((line = in.readLine()) != null) {
-				lcount++;
-				if ((lcount % 100) == 0) {
-					System.out.printf("Line %d%s", lcount, ls);
+				StringTokenizer st = new StringTokenizer(line);
+				String command = st.nextToken();
+				Instruction.Type instr;
+				
+				//skip this line if it's a comment
+				if (command.startsWith("//")) {
+					continue;
+				}
+				
+				// is the command valid
+				if (command.equals("READ")) {
+					instr = Instruction.Type.READ;
+				} else if (command.equals("WRITE")) {
+					instr = Instruction.Type.WRITE;
+				} else {
+					throw new ParseException(
+							String.format("Invalid memory command %s, in %s.",
+							command, fileName));
+				}
+				
+				String addressFormat = st.nextToken();
+				long address = 0;
+				if (addressFormat.equals("bin")) {
+					address = Long.parseLong(st.nextToken(), 2);
+				} else if (addressFormat.equals("oct")) {
+					address = Long.parseLong(st.nextToken(), 8);
+				} else if (addressFormat.equals("hex")) {
+					address = Long.parseLong(st.nextToken(), 16);
+				} else if (addressFormat.equals("dec")) {
+					address = Long.parseLong(st.nextToken());
+				} else if (addressFormat.equals("random")) {
+					address = Common.randomLong(addressLimit);
+				} else { // guess decimal address as last resort
+					address = Long.parseLong(addressFormat);
 				}
 
-				if (line.startsWith("READ") || line.startsWith("WRITE")) {
-					if (line.startsWith("READ")) {
-						command = "READ";
-					}
-					if (line.startsWith("WRITE")) {
-						command = "WRITE";
-					}
-					StringTokenizer st = new StringTokenizer(line);
-					tmp = st.nextToken();
-					tmp = st.nextToken();
-					long addr = 0;
-
-					if (tmp.startsWith("random")) {
-						instructions.add(new Instruction(command,
-								Common.randomLong(address_limit)));
-					} else {
-						if (tmp.startsWith("bin")) {
-							addr = Long.parseLong(st.nextToken(), 2);
-						} else if (tmp.startsWith("oct")) {
-							addr = Long.parseLong(st.nextToken(), 8);
-						} else if (tmp.startsWith("hex")) {
-							addr = Long.parseLong(st.nextToken(), 16);
-						} else {
-							addr = Long.parseLong(tmp);
-						}
-
-						if (0 > addr || addr > address_limit) {
-							System.out
-									.printf(
-											"MemoryManagement: %x , Address out of range in %s.  Max address %x.",
-											addr, fileName, address_limit);
-							System.exit(-1);
-						}
-						instructions.add(new Instruction(command, addr));
-					}
+				// is the address valid
+				if (address < 0 || address > addressLimit) {
+					throw new ParseException(String.format(
+							"Address: %x out of range in %s. Max address %x.",
+							address, fileName, addressLimit));
 				}
+
+				instructions.add(new Instruction(instr, address));
 			}
+		} finally {
 			in.close();
-		} catch (IOException e) { /* Handle exceptions */
 		}
 	}
 }
