@@ -3,24 +3,25 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 public class MOSSFile {
 	private String fileName;
 	private static final String ls = System.getProperty("line.separator");
-	private Vector<Instruction> instructVector;
+	private List<Instruction> instructions;
 	private long address_limit;
 
 	public MOSSFile(String fName, long addrlim) {
 		fileName = fName;
 		address_limit = addrlim;
-		instructVector = new Vector<Instruction>();
+		instructions = new ArrayList<Instruction>();
 		parse();
 	}
 
-	public Vector<Instruction> getInstructions() {
-		return instructVector;
+	public List<Instruction> getInstructions() {
+		return instructions;
 	}
 
 	private void parse() {
@@ -53,7 +54,7 @@ public class MOSSFile {
 					long addr = 0;
 
 					if (tmp.startsWith("random")) {
-						instructVector.addElement(new Instruction(command,
+						instructions.add(new Instruction(command,
 								Common.randomLong(address_limit)));
 					} else {
 						if (tmp.startsWith("bin")) {
@@ -73,8 +74,7 @@ public class MOSSFile {
 											addr, fileName, address_limit);
 							System.exit(-1);
 						}
-						instructVector
-								.addElement(new Instruction(command, addr));
+						instructions.add(new Instruction(command, addr));
 					}
 				}
 			}
