@@ -2,12 +2,6 @@
 
 public class VirtualMemorySimulatorGUI {
 	public static void main(String[] args) {
-		ControlPanel panel;
-		Kernel kernel;
-
-		kernel = new Kernel(null, null);
-		panel = new ControlPanel();
-
-		panel.init(kernel);
+		new ControlPanel();
 	}
 }

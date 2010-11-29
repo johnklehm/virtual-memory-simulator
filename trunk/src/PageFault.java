@@ -55,8 +55,8 @@ public class PageFault {
 	 *            represents the graphical element of the simulator, and allows
 	 *            one to modify the current display.
 	 */
-	public static void replacePage(Vector<Page> mem, int virtPageNum,
-			int replacePageNum, ControlPanel controlPanel) {
+	public static int replacePage(Vector<Page> mem, int virtPageNum,
+			int replacePageNum) {
 		int count = 0;
 		int oldestPage = -1;
 		int oldestTime = 0;
@@ -85,14 +85,13 @@ public class PageFault {
 		}
 		Page page = mem.elementAt(oldestPage);
 		Page nextpage = mem.elementAt(replacePageNum);
-		controlPanel.removePhysicalPage(oldestPage);
 		nextpage.physical = page.physical;
-		controlPanel.addPhysicalPage(nextpage.physical, replacePageNum);
 		page.inMemTime = 0;
 		page.lastTouchTime = 0;
 		page.R = 0;
 		page.M = 0;
 		page.physical = -1;
 		faultCount++;
+		return oldestPage;
 	}
 }
