@@ -4,28 +4,15 @@ import java.io.File;
 
 public class VirtualMemorySimulatorCLI {
 	public static void main(String[] args) {
-		if (args.length < 1 || args.length > 2) {
+		if (args.length != 2) {
 			System.out
-					.println("Usage: 'java MemoryManagement <COMMAND FILE> <PROPERTIES FILE>'");
+					.println("Usage: 'java MemoryManagement <CONFIG FILE> <TRACE FILE>'");
 			System.exit(-1);
 		}
 
-		File f = new File(args[0]);
-
-		if (!(f.exists())) {
-			System.out.println("MemoryM: error, file '" + f.getName()
-					+ "' does not exist.");
-			System.exit(-1);
-		}
-		if (!(f.canRead())) {
-			System.out.println("MemoryM: error, read of " + f.getName()
-					+ " failed.");
-			System.exit(-1);
-		}
-
-		if (args.length == 2) {
-			f = new File(args[1]);
-
+		for (int i = 0; i < args.length; ++i) {
+			File f = new File(args[i]);
+	
 			if (!(f.exists())) {
 				System.out.println("MemoryM: error, file '" + f.getName()
 						+ "' does not exist.");
@@ -38,10 +25,8 @@ public class VirtualMemorySimulatorCLI {
 			}
 		}
 
-		if (args.length == 1) {
-			new Kernel(args[0], null);
-		} else {
-			new Kernel(args[0], args[1]);
-		}
+		Kernel k = new Kernel();
+		k.loadConfig(args[0]);
+		k.loadTrace(args[1]);
 	}
 }
