@@ -1,8 +1,9 @@
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
-import java.util.Vector;
 
 public class Kernel extends Observable {
 	private int virtualPageCount = 0;
@@ -11,9 +12,9 @@ public class Kernel extends Observable {
 	private String output;
 	private static final String ls = System.getProperty("line.separator");
 	private String configFileName;
-	private Vector<Page> initialMemoryState;
-	private Vector<Page> memVector;
-	private Vector<Instruction> instructVector;
+	private List<Page> initialMemoryState;
+	private List<Page> physicalMemory;
+	private List<Instruction> instructions;
 	private int block = (int) Math.pow(2, 12);
 	private long address_limit = 16384;
 	private int currentCycle = 0;
@@ -21,8 +22,8 @@ public class Kernel extends Observable {
 	private byte addressradix = 16;
 
 	public Kernel() {
-		memVector = new Vector<Page>();
-		instructVector = new Vector<Instruction>();
+		physicalMemory = new ArrayList<Page>();
+		instructions = new ArrayList<Instruction>();
 	}
 
 	public int getAddressRadix() {
@@ -38,11 +39,11 @@ public class Kernel extends Observable {
 	}
 
 	public Instruction getInstruction(int n) {
-		return instructVector.get(n);
+		return instructions.get(n);
 	}
 
 	public Page getPage(int pageNum) {
-		return memVector.get(pageNum);
+		return physicalMemory.get(pageNum);
 	}
 
 	public int getPhysicalPageCount() {
@@ -53,9 +54,9 @@ public class Kernel extends Observable {
 		return virtualPageCount;
 	}
 
-	private void setInstructions(Vector<Instruction> v) {
-		instructVector = v;
-		totalCycles = instructVector.size();
+	private void setInstructions(List<Instruction> l) {
+		instructions = l;
+		totalCycles = instructions.size();
 	}
 
 	public boolean loadTrace(String fileName) {
@@ -105,19 +106,19 @@ public class Kernel extends Observable {
 		for (int i = 0; i < virtualPageCount; ++i) {
 			long low = block * i;
 			long high = low + block - 1;
-			memVector.addElement(new Page(i, -1, (byte) 0, (byte) 0, 0, 0,
+			physicalMemory.add(new Page(i, -1, (byte) 0, (byte) 0, 0, 0,
 					high, low));
 		}
 
 		// assign the initial state settings
-		for (int i = 0; i < initialMemoryState.size() && i < memVector.size(); ++i) {
-			memVector.set(i, initialMemoryState.get(i));
+		for (int i = 0; i < initialMemoryState.size() && i < physicalMemory.size(); ++i) {
+			physicalMemory.set(i, initialMemoryState.get(i));
 		}
 
 		// load initial memory into physical pages
 		int map_count = 0;
 		for (int i = 0; i < virtualPageCount && map_count < physicalPageCount; ++i) {
-			Page page = memVector.elementAt(i);
+			Page page = physicalMemory.get(i);
 			if (page.physical == -1) {
 				page.physical = i;
 				++map_count;
@@ -132,7 +133,7 @@ public class Kernel extends Observable {
 
 			out.println("Number of page missed: " + PageFault.faultCount);
 
-			out.println("Total Memory Accesses: " + instructVector.size());
+			out.println("Total Memory Accesses: " + instructions.size());
 			out.close();
 		} catch (IOException e) {
 			/* Do nothing */
@@ -141,7 +142,7 @@ public class Kernel extends Observable {
 
 	public void reset() {
 		currentCycle = 0;
-		memVector.clear();
+		physicalMemory.clear();
 		initMemory();
 	}
 
@@ -154,10 +155,10 @@ public class Kernel extends Observable {
 	}
 
 	public void step() {
-		Instruction instruct = instructVector.elementAt(currentCycle);
+		Instruction instruct = instructions.get(currentCycle);
 		int replacePageNum = Virtual2Physical.pageNum(instruct.addr,
 				virtualPageCount, block);
-		Page page = memVector.elementAt(replacePageNum);
+		Page page = physicalMemory.get(replacePageNum);
 
 		setChanged();
 		notifyObservers(new KernelEvent(KernelEvent.EventType.STEP, "",
@@ -185,7 +186,7 @@ public class Kernel extends Observable {
 		if (page.physical == -1) {
 			result = "page fault";
 
-			int oldestPage = PageFault.replacePage(memVector, virtualPageCount,
+			int oldestPage = PageFault.replacePage(physicalMemory, virtualPageCount,
 					replacePageNum);
 
 			setChanged();
@@ -208,7 +209,7 @@ public class Kernel extends Observable {
 
 		// update page statistics (lastTouched and inMemTime)
 		for (int i = 0; i < virtualPageCount; ++i) {
-			Page p = memVector.elementAt(i);
+			Page p = physicalMemory.get(i);
 			if (p.R == 1 && p.lastTouchTime == 10) {
 				p.R = 0;
 			}
@@ -222,12 +223,12 @@ public class Kernel extends Observable {
 
 	private boolean validate() {
 		// we're done if there's nothing look at
-		if (memVector.size() == 0 || instructVector.size() == 0) {
+		if (physicalMemory.size() == 0 || instructions.size() == 0) {
 			return false;
 		}
 
 		// check that we have some memory operations
-		totalCycles = instructVector.size();
+		totalCycles = instructions.size();
 		if (totalCycles < 1) {
 			setChanged();
 			notifyObservers(new KernelEvent(KernelEvent.EventType.ERROR,
@@ -238,10 +239,10 @@ public class Kernel extends Observable {
 
 		// check for duplicate pages
 		for (int i = 0; i < virtualPageCount; ++i) {
-			Page page = memVector.elementAt(i);
+			Page page = physicalMemory.get(i);
 
 			for (int j = i + 1; j < virtualPageCount; ++j) {
-				Page tmp_page = memVector.elementAt(j);
+				Page tmp_page = physicalMemory.get(j);
 				if (tmp_page.physical == page.physical && page.physical >= 0) {
 					setChanged();
 					notifyObservers(new KernelEvent(
@@ -255,8 +256,8 @@ public class Kernel extends Observable {
 
 		// check if all addresses are within the limits
 		long low = 0;
-		for (int i = 0; i < instructVector.size(); ++i) {
-			Instruction instruct = instructVector.elementAt(i);
+		for (int i = 0; i < instructions.size(); ++i) {
+			Instruction instruct = instructions.get(i);
 			if (instruct.addr < 0 || instruct.addr > address_limit) {
 				String errorMessage = String.format(
 						"Instruction (%s %x) out of bounds. Range: %x %x%s",

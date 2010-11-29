@@ -7,7 +7,7 @@
 // This PageFault file is an example of the FIFO Page Replacement 
 // Algorithm as described in the Memory Management section.
 
-import java.util.Vector;
+import java.util.List;
 
 public class PageFault {
 
@@ -55,7 +55,7 @@ public class PageFault {
 	 *            represents the graphical element of the simulator, and allows
 	 *            one to modify the current display.
 	 */
-	public static int replacePage(Vector<Page> mem, int virtPageNum,
+	public static int replacePage(List<Page> mem, int virtPageNum,
 			int replacePageNum) {
 		int count = 0;
 		int oldestPage = -1;
@@ -64,7 +64,7 @@ public class PageFault {
 		boolean mapped = false;
 
 		while (!(mapped) || count != virtPageNum) {
-			Page page = mem.elementAt(count);
+			Page page = mem.get(count);
 			if (page.physical != -1) {
 				if (firstPage == -1) {
 					firstPage = count;
@@ -83,8 +83,8 @@ public class PageFault {
 		if (oldestPage == -1) {
 			oldestPage = firstPage;
 		}
-		Page page = mem.elementAt(oldestPage);
-		Page nextpage = mem.elementAt(replacePageNum);
+		Page page = mem.get(oldestPage);
+		Page nextpage = mem.get(replacePageNum);
 		nextpage.physical = page.physical;
 		page.inMemTime = 0;
 		page.lastTouchTime = 0;

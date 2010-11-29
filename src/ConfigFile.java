@@ -2,8 +2,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 public class ConfigFile {
 	private static final String ls = System.getProperty("line.separator");
@@ -15,14 +16,14 @@ public class ConfigFile {
 	private int block;
 	private long address_limit;
 	private String outputFileName;
-	Vector<Page> memVector;
+	List<Page> physicalMemory;
 
 	public ConfigFile(String fileName) throws Exception {
 		outputFileName = "tracefile";
 		doFileLog = false;
 		doStdoutLog = false;
 		block = (int) Math.pow(2, 12);
-		memVector = new Vector<Page>();
+		physicalMemory = new ArrayList<Page>();
 		parse(fileName);
 	}
 
@@ -38,8 +39,8 @@ public class ConfigFile {
 		return doFileLog;
 	}
 
-	public Vector<Page> getMemory() {
-		return memVector;
+	public List<Page> getMemory() {
+		return physicalMemory;
 	}
 
 	public int getVirtualPageCount() {
@@ -224,7 +225,7 @@ public class ConfigFile {
 												+ config);
 								System.exit(-1);
 							}
-							memVector.add(new Page(id, currentPhysicalPage, R,
+							physicalMemory.add(new Page(id, currentPhysicalPage, R,
 									M, inMemTime, lastTouchTime, address_limit,
 									0));
 						}
