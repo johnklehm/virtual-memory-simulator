@@ -61,13 +61,26 @@ public class Kernel extends Observable {
 
 	public boolean loadTrace(String fileName) {
 		boolean couldLoad = false;
-		MOSSFile tf = new MOSSFile(fileName, address_limit);
+		try {
+			TraceFile tf = null;
+			try {
+				tf = new MOSSFile(fileName, address_limit);
+			} catch (TraceFile.ParseException pe) {
+				tf = new DINFile(fileName, address_limit);
+			}
 
-		if (tf != null) {
 			setInstructions(tf.getInstructions());
-
-			// check memory space for errors
+	
 			couldLoad = validate();
+	
+		} catch (IOException e) {
+			setChanged();
+			notifyObservers(new KernelEvent(KernelEvent.EventType.ERROR,
+					e.getMessage(), 0));
+		} catch (TraceFile.ParseException e) {
+			setChanged();
+			notifyObservers(new KernelEvent(KernelEvent.EventType.ERROR,
+					e.getMessage(), 0));
 		}
 
 		return couldLoad;
@@ -80,7 +93,6 @@ public class Kernel extends Observable {
 		try {
 			cf = new ConfigFile(configFileName);
 		} catch (Exception e) {
-			e.printStackTrace();
 			setChanged();
 			notifyObservers(new KernelEvent(KernelEvent.EventType.ERROR,
 					e.getMessage(), 0));
@@ -164,18 +176,12 @@ public class Kernel extends Observable {
 		notifyObservers(new KernelEvent(KernelEvent.EventType.STEP, "",
 				replacePageNum));
 
-		String type = "unknown";
-		String result = "unknown";
-		if (instruct.inst.startsWith("READ")) {
-			type = "READ";
-
+		if (instruct.inst == Instruction.Type.READ) {
 			if (page.physical != -1) {
 				page.R = 1;
 				page.lastTouchTime = 0;
 			}
-		} else if (instruct.inst.startsWith("WRITE")) {
-			type = "WRITE";
-
+		} else if (instruct.inst == Instruction.Type.WRITE) {
 			if (page.physical != -1) {
 				page.M = 1;
 				page.lastTouchTime = 0;
@@ -184,8 +190,6 @@ public class Kernel extends Observable {
 
 		// if there was a page fault replace the page accordingly
 		if (page.physical == -1) {
-			result = "page fault";
-
 			int oldestPage = PageFault.replacePage(physicalMemory, virtualPageCount,
 					replacePageNum);
 
@@ -196,16 +200,7 @@ public class Kernel extends Observable {
 			notifyObservers(new KernelEvent(KernelEvent.EventType.ADDED, "",
 					replacePageNum));
 
-		} else {
-			result = "okay";
 		}
-
-		String instructionInfo = type + " "
-				+ Long.toString(instruct.addr, addressradix) + "... " + result;
-
-		setChanged();
-		notifyObservers(new KernelEvent(KernelEvent.EventType.INFO,
-				instructionInfo, 0));
 
 		// update page statistics (lastTouched and inMemTime)
 		for (int i = 0; i < virtualPageCount; ++i) {

@@ -238,7 +238,7 @@ public class ControlPanel extends Frame implements Observer, ActionListener {
 	}
 
 	public void updateInstructionInfoArea(Instruction instruct, boolean isFault) {
-		instructionValueLabel.setText(instruct.inst);
+		instructionValueLabel.setText(instruct.typeString());
 		addressValueLabel.setText(Long.toString(instruct.addr,
 			kernel.getAddressRadix()));
 
